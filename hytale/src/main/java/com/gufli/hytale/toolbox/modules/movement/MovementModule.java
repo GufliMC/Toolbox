@@ -1,12 +1,10 @@
 package com.gufli.hytale.toolbox.modules.movement;
 
-import com.gufli.hytale.toolbox.module.AbstractModule;
 import com.gufli.hytale.toolbox.ToolboxPlugin;
+import com.gufli.hytale.toolbox.module.AbstractModule;
 import com.gufli.hytale.toolbox.modules.movement.commands.BackCommand;
 import com.hypixel.hytale.builtin.teleport.components.TeleportHistory;
 import com.hypixel.hytale.math.vector.Transform;
-import com.hypixel.hytale.math.vector.Vector3d;
-import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -26,7 +24,7 @@ public class MovementModule extends AbstractModule {
 
     public MovementModule(@NotNull ToolboxPlugin plugin) {
         super(plugin);
-        this.plugin().scheduler().asyncRepeating(this::update, 1, TimeUnit.SECONDS);
+        this.plugin().scheduler().asyncRepeating(this::update, 200, TimeUnit.MICROSECONDS);
 
         plugin.getEventRegistry().register(PlayerDisconnectEvent.class, event -> {
             sessions.remove(event.getPlayerRef().getUuid());
@@ -37,25 +35,21 @@ public class MovementModule extends AbstractModule {
 
     private void update() {
         Universe.get().getPlayers().forEach(p -> {
+            if ( p.getWorldUuid() == null ) {
+                return;
+            }
+
             var session = this.sessions.computeIfAbsent(p.getUuid(), _ -> new MovementSession());
             session.add(p.getWorldUuid(), p.getTransform());
         });
     }
 
-    public Optional<Position> lastTeleport(@NotNull PlayerRef ref) {
+    public Optional<com.gufli.hytale.toolbox.modules.movement.Teleport> previousTeleport(@NotNull PlayerRef ref) {
         MovementSession session = this.sessions.get(ref.getUuid());
         if (session == null) {
             return Optional.empty();
         }
-        return session.lastTeleport();
-    }
-
-    public Position lastPosition(@NotNull PlayerRef ref) {
-        MovementSession session = this.sessions.get(ref.getUuid());
-        if (session == null) {
-            return null;
-        }
-        return session.lastPosition();
+        return session.previousTeleport();
     }
 
     public void teleport(@NotNull PlayerRef player, @NotNull Position position) {

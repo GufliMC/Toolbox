@@ -3,7 +3,6 @@ package com.gufli.hytale.toolbox.modules.movement.commands;
 import com.gufli.colonel.annotation.annotations.Command;
 import com.gufli.colonel.annotation.annotations.parameter.Source;
 import com.gufli.hytale.toolbox.modules.movement.MovementModule;
-import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -19,24 +18,19 @@ public class BackCommand {
 
     @Command("back")
     public void back(@Source PlayerRef sender) {
-        var position = module.lastTeleport(sender).orElse(null);
-        if ( position == null ) {
+        var teleport = module.previousTeleport(sender).orElse(null);
+        if ( teleport == null ) {
             module.plugin().localizer().send(sender, "cmd.back.error.no-teleport-known");
             return;
         }
 
-        World world = Universe.get().getWorld(position.worldId());
+        World world = Universe.get().getWorld(teleport.from().worldId());
         if ( world == null ) {
             module.plugin().localizer().send(sender, "cmd.back.error.no-teleport-valid");
             return;
         }
 
-        if ( world.getPlayerRefs().contains(sender) ) {
-            module.teleport(sender, position);
-            return;
-        }
-
-        Universe.get().getWorld(position.worldId()).addPlayer(sender, position.transform());
+        module.teleport(sender, teleport.from());
     }
 
 }

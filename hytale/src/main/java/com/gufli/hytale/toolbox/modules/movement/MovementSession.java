@@ -1,27 +1,31 @@
 package com.gufli.hytale.toolbox.modules.movement;
 
 import com.hypixel.hytale.math.vector.Transform;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MovementSession {
 
-    private final List<Position> history = new ArrayList<>();
-    private final List<Position> teleports = new ArrayList<>();
+    private final List<Position> history = new CopyOnWriteArrayList<>();
+    private final List<Teleport> teleports = new CopyOnWriteArrayList<>();
 
-    public void add(UUID worldId, Transform transform) {
+    public void add(@NotNull UUID worldId, @NotNull Transform transform) {
         var previous = !history.isEmpty() ? history.getLast() : null;
         if ( previous != null && previous.worldId().equals(worldId) && Math.sqrt(previous.transform().getPosition().distanceSquaredTo(transform.getPosition())) < 0.1 ) {
             this.history.removeLast();
         }
 
-        this.history.add(new Position(worldId, transform.clone()));
+        var current = new Position(worldId, transform.clone());
 
-        if ( previous != null && (!previous.worldId().equals(worldId) || Math.sqrt(previous.transform().getPosition().distanceSquaredTo(transform.getPosition())) > 25) ) {
-            this.teleports.add(new Position(worldId, transform.clone()));
+        this.history.add(current);
+
+        if ( previous != null && (!previous.worldId().equals(worldId) || Math.sqrt(previous.transform().getPosition().distanceSquaredTo(transform.getPosition())) > 10) ) {
+            this.teleports.add(new Teleport(previous, current));
         }
 
         while ( this.history.size() > 60 ) {
@@ -33,14 +37,14 @@ public class MovementSession {
         }
     }
 
-    public Optional<Position> lastTeleport() {
+    public Optional<Teleport> previousTeleport() {
         if ( teleports.isEmpty() ) {
             return Optional.empty();
         }
-        return Optional.ofNullable(teleports.getLast());
+        return Optional.of(teleports.getLast());
     }
 
-    public Position lastPosition() {
+    public Position previousPosition() {
         return history.getLast();
     }
 
