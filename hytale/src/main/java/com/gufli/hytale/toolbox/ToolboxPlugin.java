@@ -4,9 +4,11 @@ import com.gufli.brick.i18n.hytale.localization.HytaleLocalizer;
 import com.gufli.colonel.hytale.HytaleColonel;
 import com.gufli.hytale.toolbox.module.AbstractModule;
 import com.gufli.hytale.toolbox.modules.chat.ChatModule;
+import com.gufli.hytale.toolbox.modules.item.ItemModule;
 import com.gufli.hytale.toolbox.modules.movement.MovementModule;
 import com.gufli.hytale.toolbox.scheduler.AsyncScheduler;
 import com.gufli.hytale.toolbox.scheduler.BrickThreadPoolAsyncScheduler;
+import com.guflimc.config.toml.TomlConfig;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import org.jetbrains.annotations.NotNull;
@@ -21,6 +23,7 @@ public class ToolboxPlugin extends JavaPlugin {
     private final HytaleColonel colonel = new HytaleColonel(this, localizer);
     private final AsyncScheduler scheduler = new BrickThreadPoolAsyncScheduler("toolbox");
 
+    private ToolboxConfig config = new ToolboxConfig();
 
     private final Set<AbstractModule> modules = new CopyOnWriteArraySet<>();
 
@@ -32,6 +35,8 @@ public class ToolboxPlugin extends JavaPlugin {
     protected void setup() {
         super.setup();
 
+        config = TomlConfig.load(getDataDirectory().resolve("config.toml"), new ToolboxConfig());
+
         localizer.registerLocales(this);
 
         setupModules();
@@ -42,6 +47,7 @@ public class ToolboxPlugin extends JavaPlugin {
     private void setupModules() {
         this.modules.add(new MovementModule(this));
         this.modules.add(new ChatModule(this));
+        this.modules.add(new ItemModule(this));
     }
 
     //
@@ -56,6 +62,10 @@ public class ToolboxPlugin extends JavaPlugin {
 
     public AsyncScheduler scheduler() {
         return scheduler;
+    }
+
+    public ToolboxConfig config() {
+        return config;
     }
 
     public <T extends AbstractModule> T module(Class<T> type) {

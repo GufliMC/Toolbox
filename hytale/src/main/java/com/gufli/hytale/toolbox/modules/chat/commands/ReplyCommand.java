@@ -16,7 +16,6 @@ public class ReplyCommand {
     }
 
     @Command("reply")
-    @Command("r")
     public void reply(@Source PlayerRef sender, @Parameter(read = ReadMode.GREEDY) String message) {
         PlayerRef target = module.replyToTarget(sender).orElse(null);
         if (target == null) {

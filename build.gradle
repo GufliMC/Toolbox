@@ -15,6 +15,11 @@ subprojects {
     repositories {
         maven { url "https://repo.jorisg.com/snapshots" }
         maven { url "https://repo.jorisg.com/releases" }
+        maven {
+            name = "Jorisg"
+            url = uri("https://repo.jorisg.com/guflimc")
+            credentials(org.gradle.api.credentials.PasswordCredentials)
+        }
     }
 
     compileJava {

@@ -31,6 +31,7 @@ public class BackCommand {
         }
 
         module.teleport(sender, teleport.from());
+        module.plugin().localizer().send(sender, "cmd.back.teleported");
     }
 
 }

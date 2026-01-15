@@ -3,6 +3,7 @@ package com.gufli.hytale.toolbox.modules.movement;
 import com.gufli.hytale.toolbox.ToolboxPlugin;
 import com.gufli.hytale.toolbox.module.AbstractModule;
 import com.gufli.hytale.toolbox.modules.movement.commands.BackCommand;
+import com.gufli.hytale.toolbox.modules.movement.commands.TeleportRandomCommand;
 import com.hypixel.hytale.builtin.teleport.components.TeleportHistory;
 import com.hypixel.hytale.math.vector.Transform;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
@@ -31,6 +32,11 @@ public class MovementModule extends AbstractModule {
         });
 
         registerCommands(new BackCommand(this));
+        registerCommands(new TeleportRandomCommand(this));
+    }
+
+    public MovementConfig config() {
+        return this.plugin().config().movement;
     }
 
     private void update() {

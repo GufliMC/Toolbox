@@ -6,6 +6,7 @@ import com.gufli.colonel.annotation.annotations.parameter.Parameter;
 import com.gufli.colonel.annotation.annotations.parameter.Source;
 import com.gufli.colonel.common.dispatch.definition.ReadMode;
 import com.hypixel.hytale.server.core.command.system.CommandSender;
+import com.hypixel.hytale.server.core.universe.Universe;
 
 public class AnnounceCommand {
 
@@ -17,7 +18,7 @@ public class AnnounceCommand {
 
     @Command("announce")
     public void announce(@Source CommandSender sender, @Parameter(read = ReadMode.GREEDY) String message) {
-        localizer.send(sender, "cmd.announce.format", message);
+        Universe.get().getPlayers().forEach(player -> localizer.send(player, "cmd.announce.format", message));
     }
 
 }

@@ -4,6 +4,7 @@ import com.gufli.hytale.toolbox.module.AbstractModule;
 import com.gufli.hytale.toolbox.ToolboxPlugin;
 import com.gufli.hytale.toolbox.modules.chat.commands.AnnounceCommand;
 import com.gufli.hytale.toolbox.modules.chat.commands.DirectMessageCommand;
+import com.gufli.hytale.toolbox.modules.chat.commands.PlayerListCommand;
 import com.gufli.hytale.toolbox.modules.chat.commands.ReplyCommand;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -25,6 +26,7 @@ public class ChatModule extends AbstractModule {
         registerCommands(new AnnounceCommand(plugin.localizer()));
         registerCommands(new DirectMessageCommand(this));
         registerCommands(new ReplyCommand(this));
+        registerCommands(new PlayerListCommand(this));
 
         plugin.getEventRegistry().register(PlayerDisconnectEvent.class, event -> {
             replyTo.remove(event.getPlayerRef().getUuid());
