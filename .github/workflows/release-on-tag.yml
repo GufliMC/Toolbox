@@ -27,15 +27,14 @@ jobs:
         with:
           arguments: test
 
-      - name: Obfuscate Jar
+      - name: Build Jar
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: obfuscateJar --stacktrace
+          arguments: shadowJar
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: false
           files: |
-            **/build/libs/*-obf.jar
-            **/obfuscation-mapping.txt
+            **/build/libs/*.jar

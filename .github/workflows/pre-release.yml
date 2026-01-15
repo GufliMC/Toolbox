@@ -24,10 +24,10 @@ jobs:
         env:
           GRADLE_BUILD_ACTION_CACHE_DEBUG_ENABLED: true
 
-      - name: Obfuscate Jar
+      - name: Build Jar
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: obfuscateJar
+          arguments: shadowJar
 
       - uses: marvinpinto/action-automatic-releases@latest
         with:
@@ -36,5 +36,4 @@ jobs:
           prerelease: true
           title: "Development Build"
           files: |
-            **/build/libs/*-obf.jar
-            **/obfuscation-mapping.txt
+            **/build/libs/*.jar
