@@ -4,15 +4,12 @@ repositories {
 
 dependencies {
     // provided
-    compileOnly files('libs/HytaleServer.jar')
+    compileOnly 'com.hypixel.hytale:HytaleServer:0.1.0'
 
     // shadow
     implementation 'com.gufli.brick.i18n:hytale:+'
     implementation 'com.gufli.colonel:hytale:+'
     implementation 'com.guflimc.config:toml:+'
-
-//    compileOnly 'com.hypixel.hytale:HytaleServer:1.0-SNAPSHOT'
-
 }
 
 shadowJar {
