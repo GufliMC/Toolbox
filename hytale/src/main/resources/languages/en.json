@@ -1,0 +1,15 @@
+{
+  "cmderr.generic": "An unexpected error occured, check the console for more information.",
+  "cmderr.parameter-invalid-value": "The value {0} is invalid for parameter {1}.",
+  "cmderr.parameter-is-missing": "The parameter {0} is missing. Expected syntax: {1}.",
+  "cmderr.command-not-found": "Command not found: {0}",
+
+  "cmderr.args.player-not-online": "The player {0} is not online.",
+
+  "cmd.announce.format": "ANNOUNCEMENT: {0}",
+
+  "cmd.directmessage.sender.format": "[You -> {0}]: {1}",
+  "cmd.directmessage.target.format": "[{0} -> You]: {1}",
+
+  "cmd.back.error.no-teleport-known": "No previous teleport location known."
+}

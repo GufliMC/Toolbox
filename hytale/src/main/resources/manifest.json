@@ -1,0 +1,17 @@
+{
+  "Group": "Gufli",
+  "Name": "Toolbox",
+  "Version": "1.0.0",
+  "Authors": [
+    {
+      "Name": "Joris Guffens",
+      "Url": "https://guflimc.com"
+    }
+  ],
+  "Website": "https://guflimc.com",
+  "Main": "com.gufli.hytale.toolbox.ToolboxPlugin",
+  "ServerVersion": "*",
+  "OptionalDependencies": {
+    "Hytale:PermissionsModule": "*"
+  }
+}

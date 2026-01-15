@@ -1,0 +1,19 @@
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+    // provided
+    compileOnly files('libs/HytaleServer.jar')
+
+    // shadow
+    implementation 'com.gufli.brick.i18n:hytale:+'
+    implementation 'com.gufli.colonel:hytale:+'
+
+//    compileOnly 'com.hypixel.hytale:HytaleServer:1.0-SNAPSHOT'
+
+}
+
+shadowJar {
+    group "build"
+}

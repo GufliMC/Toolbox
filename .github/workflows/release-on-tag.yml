@@ -1,0 +1,41 @@
+name: Release on tag
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: '0'
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - run: 'echo "JorisgUsername=${{ secrets.JORISG_REPO_USERNAME }}" >> gradle.properties'
+      - run: 'echo "JorisgPassword=${{ secrets.JORISG_REPO_PASSWORD }}" >> gradle.properties'
+
+      - name: Unit Test
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: test
+
+      - name: Obfuscate Jar
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: obfuscateJar --stacktrace
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: false
+          files: |
+            **/build/libs/*-obf.jar
+            **/obfuscation-mapping.txt

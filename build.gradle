@@ -1,0 +1,32 @@
+plugins {
+    id 'com.gradleup.shadow' version '9.3.1' apply false
+    id 'pl.allegro.tech.build.axion-release' version '1.13.6'
+}
+
+group 'com.gufli.hytale.toolbox'
+version = scmVersion.version
+
+def shadowProjects = [project(':hytale')]
+ext.set("shadowProjects", shadowProjects)
+
+subprojects {
+    apply plugin: 'java'
+
+    repositories {
+        maven { url "https://repo.jorisg.com/snapshots" }
+        maven { url "https://repo.jorisg.com/releases" }
+    }
+
+    compileJava {
+        options.compilerArgs += ["-parameters"]
+        options.fork = true
+    }
+}
+
+apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-default.gradle'
+apply from: 'https://raw.githubusercontent.com/GufliMC/scripts/refs/heads/main/gradle/subprojects-shadow.gradle'
+
+if ( System.getProperty("os.name").toLowerCase().contains("windows") ) {
+    ext.set("shadowCopy", [(project(':hytale')): 'D:\\Hytale\\server\\2026.01.13-dcad8778f\\Server\\mods'])
+    apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-shadow-copy.gradle'
+}
