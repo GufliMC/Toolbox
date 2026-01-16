@@ -1,40 +1,58 @@
 {
-  "cmderr.generic": "An unexpected error occured, check the console for more information.",
-  "cmderr.parameter-invalid-value": "The value {0} is invalid for parameter {1}.",
-  "cmderr.parameter-is-missing": "The parameter {0} is missing. Expected syntax: {1}.",
-  "cmderr.command-not-found": "Command not found: {0}",
+  "cmderr.generic": "<red>An unexpected error occured, check the console for more information.",
+  "cmderr.parameter-invalid-value": "<red>The value <dark_red>{0} <red>is invalid for parameter <dark_red>{1}<red>.",
+  "cmderr.parameter-is-missing": "<red>The parameter <dark_red>{0} <red>is missing. Expected syntax: <dark_red>{1}<red>.",
+  "cmderr.command-not-found": "<red>Command not found: {0}",
 
-  "cmderr.args.player-not-online": "The player {0} is not online.",
+  "cmderr.args.player-not-online": "<red>The player <dark_red>{0} <red>is not online.",
 
   "cmd.announce.help.description": "Send an announcement message in chat to all players.",
   "cmd.announce.help.param.message.description": "The announcement message to send.",
   "cmd.announce.help.param.message.type": "Text",
-  "cmd.announce.format": "ANNOUNCEMENT: {0}",
+  "cmd.announce.format": "<bold><gray>[ANNOUNCEMENT]: <white>{0}",
 
   "cmd.directmessage.help.description": "Send a private message to another player.",
   "cmd.directmessage.help.param.target.description": "The player to send the message to.",
   "cmd.directmessage.help.param.target.type": "Player",
   "cmd.directmessage.help.param.message.description": "The message to send.",
   "cmd.directmessage.help.param.message.type": "Text",
-  "cmd.directmessage.sender.format": "[You -> {0}]: {1}",
-  "cmd.directmessage.target.format": "[{0} -> You]: {1}",
+  "cmd.directmessage.sender.format": "<gray>[<white>You <gray>-> <green>{0}<gray>]: <white>{1}",
+  "cmd.directmessage.target.format": "<gray>[<green>{0} <gray>-> <white>You<gray>]: <white>{1}",
 
   "cmd.reply.help.description": "Reply to the last private message you received.",
   "cmd.reply.help.param.message.description": "The message to send.",
   "cmd.reply.help.param.message.type": "Text",
-  "cmd.reply.error.no-reply-target": "There is no one to reply to.",
+  "cmd.reply.error.no-reply-target": "<red>There is no one to reply to.",
 
   "cmd.back.help.description": "Teleport back to your previous location.",
-  "cmd.back.error.no-teleport-known": "No previous teleport location known.",
-  "cmd.back.teleported": "You've been teleported back to your previous location.",
+  "cmd.back.error.no-teleport-known": "<red>No previous teleport location known.",
+  "cmd.back.teleported": "<gray>You've been teleported back to your previous location.",
 
   "cmd.tprandom.help.description": "Teleport to a random location.",
-  "cmd.tprandom.error.no-teleport-known": "Unable to find a random teleport location.",
-  "cmd.tprandom.teleported": "You've been teleported to a random location.",
+  "cmd.tprandom.error.no-teleport-known": "<red>Unable to find a random teleport location.",
+  "cmd.tprandom.teleported": "<gray>You've been teleported to a random location.",
 
   "cmd.repair.help.description": "Repair the item you're holding.",
-  "cmd.repair.repaired": "The item you're holding has been repaired.",
+  "cmd.repair.repaired": "<gray>The item you're holding has been repaired.",
 
   "cmd.playerlist.help.description": "View a list of all online players.",
-  "cmd.playerlist.list": "There {0,choice,0#are|1#is|1>are} {0} {0,choice,0#players|1#player|1>players} online: {1}"
+  "cmd.playerlist.list": "<gray>There {0,choice,0#are|1#is|1>are} <green>{0} <gray>{0,choice,0#players|1#player|1>players} online: <white>{1}",
+
+  "cmd.tprequest.error.too-many-requests": "<red>You've already sent this player a request.",
+  "cmd.tprequest.requester": "<gray>You've send a request to teleport to <green>{0}<gray>.",
+  "cmd.tprequest.requestee": "<green>{0} <gray>has requested to teleport to you. Type <green>/tpaccept <gray>or <green>/tpdeny<gray>.",
+
+  "cmd.tpaccept.error.no-request-exists": "<red>You don't have a teleport request from <dark_red>{0}<red>.",
+  "cmd.tprequest.teleport.teleportee": "<gray>You've teleported to <green>{0}<gray>.",
+  "cmd.tprequest.teleport.destination": "<green>{0} <gray>has teleported to your location.",
+
+  "cmd.tpdeny.requester": "<green>{0} <gray>has denied your teleport request.",
+  "cmd.tpdeny.requestee": "<gray>You've denied the teleport request from <green>{0}<gray>.",
+
+  "cmd.tphererequest.requester": "<gray>You've requested <green>{0} <gray>to teleport here.",
+  "cmd.tphererequest.requestee": "<green>{0} <gray>has requested you to teleport to them. Type <green>/tpaccept <gray>or <green>/tpdeny<gray>.",
+
+  "cmd.tpcancel.error.no-request-exists": "<red>You don't have a teleport request to <dark_red>{0}<red>.",
+  "cmd.tpcancel.requester": "<gray>You've cancelled your teleport request to <green>{0}<gray>.",
+  "cmd.tpcancel.requestee": "<green>{0} <gray>has cancelled their teleport request to you."
 }

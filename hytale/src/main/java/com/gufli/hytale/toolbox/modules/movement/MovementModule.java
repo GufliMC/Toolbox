@@ -2,8 +2,10 @@ package com.gufli.hytale.toolbox.modules.movement;
 
 import com.gufli.hytale.toolbox.ToolboxPlugin;
 import com.gufli.hytale.toolbox.module.AbstractModule;
-import com.gufli.hytale.toolbox.modules.movement.commands.BackCommand;
-import com.gufli.hytale.toolbox.modules.movement.commands.TeleportRandomCommand;
+import com.gufli.hytale.toolbox.modules.movement.commands.*;
+import com.gufli.hytale.toolbox.modules.movement.data.MovementSession;
+import com.gufli.hytale.toolbox.modules.movement.data.Position;
+import com.gufli.hytale.toolbox.modules.movement.data.TeleportRequest;
 import com.hypixel.hytale.builtin.teleport.components.TeleportHistory;
 import com.hypixel.hytale.math.vector.Transform;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
@@ -13,15 +15,16 @@ import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.World;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.time.Instant;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.TimeUnit;
 
 public class MovementModule extends AbstractModule {
 
     private final Map<UUID, MovementSession> sessions = new ConcurrentHashMap<>();
+    private final Set<TeleportRequest> teleportRequests = new CopyOnWriteArraySet<>();
 
     public MovementModule(@NotNull ToolboxPlugin plugin) {
         super(plugin);
@@ -29,10 +32,18 @@ public class MovementModule extends AbstractModule {
 
         plugin.getEventRegistry().register(PlayerDisconnectEvent.class, event -> {
             sessions.remove(event.getPlayerRef().getUuid());
+
+            teleportRequests.removeIf(r -> r.requester().equals(event.getPlayerRef().getUuid()));
+            teleportRequests.removeIf(r -> r.requestee().equals(event.getPlayerRef().getUuid()));
         });
 
         registerCommands(new BackCommand(this));
         registerCommands(new TeleportRandomCommand(this));
+        registerCommands(new TeleportRequestCommand(this));
+        registerCommands(new TeleportAcceptCommand(this));
+        registerCommands(new TeleportDenyCommand(this));
+        registerCommands(new TeleportHereRequestCommand(this));
+        registerCommands(new TeleportCancelCommand(this));
     }
 
     public MovementConfig config() {
@@ -50,13 +61,17 @@ public class MovementModule extends AbstractModule {
         });
     }
 
-    public Optional<com.gufli.hytale.toolbox.modules.movement.Teleport> previousTeleport(@NotNull PlayerRef ref) {
+    //
+
+    public Optional<com.gufli.hytale.toolbox.modules.movement.data.Teleport> previousTeleport(@NotNull PlayerRef ref) {
         MovementSession session = this.sessions.get(ref.getUuid());
         if (session == null) {
             return Optional.empty();
         }
         return session.previousTeleport();
     }
+
+    //
 
     public void teleport(@NotNull PlayerRef player, @NotNull Position position) {
         World world = Universe.get().getWorld(position.worldId());
@@ -83,4 +98,22 @@ public class MovementModule extends AbstractModule {
 
         store.addComponent(ref, Teleport.getComponentType(), new Teleport(world, transform));
     }
+
+    //
+
+    public void teleportRequest(@NotNull PlayerRef requester, @NotNull PlayerRef requestee, @NotNull TeleportRequest.TeleportRequestTarget target) {
+        this.teleportRequests.add(new TeleportRequest(requester.getUuid(), requestee.getUuid(), target, Instant.now()));
+    }
+
+    public void teleportRequestCancel(@NotNull PlayerRef requester, @NotNull PlayerRef requestee) {
+        this.teleportRequests.removeIf(r -> r.requester().equals(requester.getUuid()) && r.requestee().equals(requestee.getUuid()));
+    }
+
+    public Optional<TeleportRequest> findTeleportRequest(@NotNull PlayerRef requester, @NotNull PlayerRef requestee) {
+        return this.teleportRequests.stream()
+                .filter(r -> r.requester().equals(requester.getUuid()) && r.requestee().equals(requestee.getUuid()))
+                .findFirst();
+    }
+
+
 }
