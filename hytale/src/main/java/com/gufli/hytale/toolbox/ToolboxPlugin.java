@@ -4,11 +4,12 @@ import com.gufli.brick.i18n.hytale.localization.HytaleLocalizer;
 import com.gufli.colonel.hytale.HytaleColonel;
 import com.gufli.hytale.toolbox.module.AbstractModule;
 import com.gufli.hytale.toolbox.modules.chat.ChatModule;
+import com.gufli.hytale.toolbox.modules.commands.CommandsModule;
 import com.gufli.hytale.toolbox.modules.item.ItemModule;
 import com.gufli.hytale.toolbox.modules.movement.MovementModule;
 import com.gufli.hytale.toolbox.scheduler.AsyncScheduler;
 import com.gufli.hytale.toolbox.scheduler.BrickThreadPoolAsyncScheduler;
-import com.guflimc.config.toml.TomlConfig;
+import com.gufli.config.toml.TomlConfig;
 import com.hypixel.hytale.event.EventRegistry;
 import com.hypixel.hytale.server.core.event.events.player.PlayerConnectEvent;
 import com.hypixel.hytale.server.core.modules.i18n.I18nModule;
@@ -59,6 +60,7 @@ public class ToolboxPlugin extends JavaPlugin {
         this.modules.add(new MovementModule(this));
         this.modules.add(new ChatModule(this));
         this.modules.add(new ItemModule(this));
+        this.modules.add(new CommandsModule(this));
     }
 
     //

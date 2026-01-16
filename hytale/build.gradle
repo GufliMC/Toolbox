@@ -5,7 +5,7 @@ dependencies {
     // shadow
     implementation 'com.gufli.brick.i18n:hytale:+'
     implementation 'com.gufli.colonel:hytale:+'
-    implementation 'com.guflimc.config:toml:+'
+    implementation 'com.gufli.config:toml:+'
 }
 
 shadowJar {
