@@ -3,6 +3,9 @@ package com.gufli.hytale.toolbox.modules.movement.commands;
 import com.gufli.colonel.annotation.annotations.Command;
 import com.gufli.colonel.annotation.annotations.parameter.Parameter;
 import com.gufli.colonel.annotation.annotations.parameter.Source;
+import com.gufli.colonel.hytale.annotations.command.CommandHelp;
+import com.gufli.colonel.hytale.annotations.command.Permission;
+import com.gufli.colonel.hytale.annotations.parameter.ParameterHelp;
 import com.gufli.hytale.toolbox.modules.movement.MovementModule;
 import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.math.util.MathUtil;
@@ -25,14 +28,19 @@ public class TeleportRandomCommand {
     }
 
     @Command("tprandom")
-    @Command("tpr")
+    @Permission("gufli.toolbox.command.tprandom")
+    @CommandHelp(description = "cmd.tprandom.help.description")
     public void tprandom(@Source PlayerRef sender) {
         teleport(sender, sender);
     }
 
     @Command("tprandom")
-    @Command("tpr")
-    public void tprandom(@Source PlayerRef sender, @Parameter PlayerRef target) {
+    @Permission("gufli.toolbox.command.tprandom")
+    @CommandHelp(description = "cmd.tprandom.help.description")
+    public void tprandom(@Source PlayerRef sender,
+                         @Parameter
+                         @ParameterHelp(description = "cmd.tprandom.help.param.target.description", type = "cmd.tprandom.help.param.target.type")
+                         PlayerRef target) {
         teleport(sender, target);
     }
 

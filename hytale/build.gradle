@@ -1,7 +1,3 @@
-repositories {
-    mavenLocal()
-}
-
 dependencies {
     // provided
     compileOnly 'com.hypixel.hytale:HytaleServer:0.1.0'

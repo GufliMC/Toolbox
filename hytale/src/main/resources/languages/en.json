@@ -6,20 +6,35 @@
 
   "cmderr.args.player-not-online": "The player {0} is not online.",
 
+  "cmd.announce.help.description": "Send an announcement message in chat to all players.",
+  "cmd.announce.help.param.message.description": "The announcement message to send.",
+  "cmd.announce.help.param.message.type": "Text",
   "cmd.announce.format": "ANNOUNCEMENT: {0}",
 
+  "cmd.directmessage.help.description": "Send a private message to another player.",
+  "cmd.directmessage.help.param.target.description": "The player to send the message to.",
+  "cmd.directmessage.help.param.target.type": "Player",
+  "cmd.directmessage.help.param.message.description": "The message to send.",
+  "cmd.directmessage.help.param.message.type": "Text",
   "cmd.directmessage.sender.format": "[You -> {0}]: {1}",
   "cmd.directmessage.target.format": "[{0} -> You]: {1}",
 
+  "cmd.reply.help.description": "Reply to the last private message you received.",
+  "cmd.reply.help.param.message.description": "The message to send.",
+  "cmd.reply.help.param.message.type": "Text",
   "cmd.reply.error.no-reply-target": "There is no one to reply to.",
 
+  "cmd.back.help.description": "Teleport back to your previous location.",
   "cmd.back.error.no-teleport-known": "No previous teleport location known.",
   "cmd.back.teleported": "You've been teleported back to your previous location.",
 
+  "cmd.tprandom.help.description": "Teleport to a random location.",
   "cmd.tprandom.error.no-teleport-known": "Unable to find a random teleport location.",
   "cmd.tprandom.teleported": "You've been teleported to a random location.",
 
+  "cmd.repair.help.description": "Repair the item you're holding.",
   "cmd.repair.repaired": "The item you're holding has been repaired.",
 
+  "cmd.playerlist.help.description": "View a list of all online players.",
   "cmd.playerlist.list": "There {0,choice,0#are|1#is|1>are} {0} {0,choice,0#players|1#player|1>players} online: {1}"
 }

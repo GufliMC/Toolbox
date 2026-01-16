@@ -2,6 +2,8 @@ package com.gufli.hytale.toolbox.modules.movement.commands;
 
 import com.gufli.colonel.annotation.annotations.Command;
 import com.gufli.colonel.annotation.annotations.parameter.Source;
+import com.gufli.colonel.hytale.annotations.command.CommandHelp;
+import com.gufli.colonel.hytale.annotations.command.Permission;
 import com.gufli.hytale.toolbox.modules.movement.MovementModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
@@ -17,6 +19,8 @@ public class BackCommand {
     }
 
     @Command("back")
+    @Permission("gufli.toolbox.command.back")
+    @CommandHelp(description = "cmd.back.help.description")
     public void back(@Source PlayerRef sender) {
         var teleport = module.previousTeleport(sender).orElse(null);
         if ( teleport == null ) {

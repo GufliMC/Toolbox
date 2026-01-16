@@ -2,6 +2,8 @@ package com.gufli.hytale.toolbox.modules.item.commands;
 
 import com.gufli.colonel.annotation.annotations.Command;
 import com.gufli.colonel.annotation.annotations.parameter.Source;
+import com.gufli.colonel.hytale.annotations.command.CommandHelp;
+import com.gufli.colonel.hytale.annotations.command.Permission;
 import com.gufli.hytale.toolbox.modules.item.ItemModule;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.Inventory;
@@ -18,6 +20,8 @@ public class RepairCommand {
     }
 
     @Command("repair")
+    @Permission("gufli.toolbox.command.repair")
+    @CommandHelp(description = "cmd.repair.help.description")
     public void repair(@Source PlayerRef sender) {
         var ref = sender.getReference();
         if ( ref == null ) {

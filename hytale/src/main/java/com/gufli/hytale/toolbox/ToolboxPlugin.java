@@ -9,6 +9,9 @@ import com.gufli.hytale.toolbox.modules.movement.MovementModule;
 import com.gufli.hytale.toolbox.scheduler.AsyncScheduler;
 import com.gufli.hytale.toolbox.scheduler.BrickThreadPoolAsyncScheduler;
 import com.guflimc.config.toml.TomlConfig;
+import com.hypixel.hytale.event.EventRegistry;
+import com.hypixel.hytale.server.core.event.events.player.PlayerConnectEvent;
+import com.hypixel.hytale.server.core.modules.i18n.I18nModule;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import org.jetbrains.annotations.NotNull;
@@ -42,6 +45,14 @@ public class ToolboxPlugin extends JavaPlugin {
         setupModules();
 
         colonel.init();
+
+        EventRegistry eventRegistry = getEventRegistry();
+        eventRegistry.registerGlobal(PlayerConnectEvent.class, event -> {
+            I18nModule i18n = I18nModule.get();
+            if (i18n != null && event.getPlayerRef() != null) {
+                i18n.sendTranslations(event.getPlayerRef().getPacketHandler(), event.getPlayerRef().getLanguage());
+            }
+        });
     }
 
     private void setupModules() {

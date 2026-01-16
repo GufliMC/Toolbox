@@ -17,7 +17,7 @@ public class MovementSession {
     public void add(@NotNull UUID worldId, @NotNull Transform transform) {
         var previous = !history.isEmpty() ? history.getLast() : null;
         if ( previous != null && previous.worldId().equals(worldId) && Math.sqrt(previous.transform().getPosition().distanceSquaredTo(transform.getPosition())) < 0.1 ) {
-            this.history.removeLast();
+            this.history.remove(previous);
         }
 
         var current = new Position(worldId, transform.clone());
