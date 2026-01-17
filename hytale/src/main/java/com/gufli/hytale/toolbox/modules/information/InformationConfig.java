@@ -3,7 +3,7 @@ package com.gufli.hytale.toolbox.modules.information;
 import io.github.wasabithumb.jtoml.serial.TomlSerializable;
 import io.github.wasabithumb.jtoml.serial.reflect.Key;
 
-public class InformationConfig {
+public class InformationConfig implements TomlSerializable {
 
     @Key("players")
     public JoinQuitConfig joinQuit = new JoinQuitConfig();

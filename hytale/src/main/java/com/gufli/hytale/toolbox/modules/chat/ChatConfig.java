@@ -8,6 +8,6 @@ public class ChatConfig implements TomlSerializable {
     public boolean enabled = true;
 
     @Key("chat-format")
-    public String chatFormat = "<white>[{player}]: <gray>{message}";
+    public String chatFormat = "<gray>[<white>{player}<gray>]: {message}";
 
 }
