@@ -19,8 +19,11 @@ import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Field;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 public class ToolboxPlugin extends JavaPlugin {
@@ -44,18 +47,19 @@ public class ToolboxPlugin extends JavaPlugin {
         config = TomlConfig.load(getDataDirectory().resolve("config.toml"), new ToolboxConfig());
 
         localizer.registerLocales(this);
+        localizer.hookClientSideTranslations();
 
         setupModules();
 
         colonel.init();
-
-        EventRegistry eventRegistry = getEventRegistry();
-        eventRegistry.registerGlobal(PlayerConnectEvent.class, event -> {
-            I18nModule i18n = I18nModule.get();
-            if (i18n != null && event.getPlayerRef() != null) {
-                i18n.sendTranslations(event.getPlayerRef().getPacketHandler(), event.getPlayerRef().getLanguage());
-            }
-        });
+//
+//        EventRegistry eventRegistry = getEventRegistry();
+//        eventRegistry.registerGlobal(PlayerConnectEvent.class, event -> {
+//            I18nModule i18n = I18nModule.get();
+//            if (i18n != null && event.getPlayerRef() != null) {
+//                i18n.sendTranslations(event.getPlayerRef().getPacketHandler(), event.getPlayerRef().getLanguage());
+//            }
+//        });
     }
 
     private void setupModules() {
