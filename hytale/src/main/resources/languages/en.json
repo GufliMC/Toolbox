@@ -38,21 +38,47 @@
   "cmd.playerlist.help.description": "View a list of all online players.",
   "cmd.playerlist.list": "<gray>There {0,choice,0#are|1#is|1>are} <green>{0} <gray>{0,choice,0#players|1#player|1>players} online: <white>{1}",
 
+  "cmd.tprequest.help.description": "Request to teleport to another player.",
+  "cmd.tprequest.help.param.target.description": "The player you want to teleport to.",
+  "cmd.tprequest.help.param.target.type": "Player",
   "cmd.tprequest.error.too-many-requests": "<red>You've already sent this player a request.",
   "cmd.tprequest.requester": "<gray>You've send a request to teleport to <green>{0}<gray>.",
   "cmd.tprequest.requestee": "<green>{0} <gray>has requested to teleport to you. Type <green>/tpaccept <gray>or <green>/tpdeny<gray>.",
 
-  "cmd.tpaccept.error.no-request-exists": "<red>You don't have a teleport request from <dark_red>{0}<red>.",
+  "cmd.tpaccept.help.description": "Accept a pending teleport request.",
+  "cmd.tpaccept.help.param.target.description": "For which player to accept the teleport request.",
+  "cmd.tpaccept.help.param.target.type": "Player",
+  "cmd.tpaccept.error.no-request-exists": "<red>You don't have a teleport request.",
+  "cmd.tpaccept.error.no-request-exists-target": "<red>You don't have a teleport request from <dark_red>{0}<red>.",
+  "cmd.tpaccept.error.multiple-requests": "<red>You have multiple teleport requests, please specify a player.",
   "cmd.tprequest.teleport.teleportee": "<gray>You've teleported to <green>{0}<gray>.",
   "cmd.tprequest.teleport.destination": "<green>{0} <gray>has teleported to your location.",
 
+  "cmd.tpdeny.help.description": "Deny a pending teleport request.",
+  "cmd.tpdeny.help.param.target.description": "For which player to deny the teleport request.",
+  "cmd.tpdeny.help.param.target.type": "Player",
   "cmd.tpdeny.requester": "<green>{0} <gray>has denied your teleport request.",
   "cmd.tpdeny.requestee": "<gray>You've denied the teleport request from <green>{0}<gray>.",
 
+  "cmd.tphererequest.help.description": "Request another player to teleport to your location.",
+  "cmd.tphererequest.help.param.target.description": "The player you're requesting to teleport to you.",
+  "cmd.tphererequest.help.param.target.type": "Player",
   "cmd.tphererequest.requester": "<gray>You've requested <green>{0} <gray>to teleport here.",
   "cmd.tphererequest.requestee": "<green>{0} <gray>has requested you to teleport to them. Type <green>/tpaccept <gray>or <green>/tpdeny<gray>.",
 
+  "cmd.tpcancel.help.description": "Cancel a pending teleport request.",
+  "cmd.tpcancel.help.param.target.description": "For which player to cancel the teleport request.",
+  "cmd.tpcancel.help.param.target.type": "Player",
   "cmd.tpcancel.error.no-request-exists": "<red>You don't have a teleport request to <dark_red>{0}<red>.",
+  "cmd.tpcancel.error.multiple-requests": "<red>You have sent multiple teleport requests, please specify a player.",
   "cmd.tpcancel.requester": "<gray>You've cancelled your teleport request to <green>{0}<gray>.",
-  "cmd.tpcancel.requestee": "<green>{0} <gray>has cancelled their teleport request to you."
+  "cmd.tpcancel.requestee": "<green>{0} <gray>has cancelled their teleport request to you.",
+
+  "cmd.god.help.description": "Toggle god mode.",
+  "cmd.god.enabled": "<gray>You have <green>enabled <gray>god mode.",
+  "cmd.god.disabled": "<gray>You have <green>disabled <gray>god mode.",
+
+  "cmd.freecam.help.description": "Toggle freecam mode.",
+  "cmd.freecam.enabled": "<gray>You have <green>enabled <gray>freecam mode.",
+  "cmd.freecam.disabled": "<gray>You have <green>disabled <gray>freecam mode."
 }

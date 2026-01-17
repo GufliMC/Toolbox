@@ -10,6 +10,9 @@ import com.gufli.hytale.toolbox.modules.movement.MovementModule;
 import com.gufli.hytale.toolbox.modules.movement.data.Position;
 import com.gufli.hytale.toolbox.modules.movement.data.TeleportRequest;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.Universe;
+
+import java.util.Collection;
 
 public class TeleportDenyCommand {
 
@@ -30,6 +33,32 @@ public class TeleportDenyCommand {
         TeleportRequest request = module.findTeleportRequest(target, sender).orElse(null);
         if ( request == null ) {
             module.plugin().localizer().send(sender, "cmd.tpaccept.error.no-request-exists", target.getUsername());
+            return;
+        }
+
+        module.teleportRequestCancel(target, sender);
+        module.plugin().localizer().send(target, "cmd.tpdeny.requester", sender.getUsername());
+        module.plugin().localizer().send(sender, "cmd.tpdeny.requestee", target.getUsername());
+    }
+
+    @Command("tpdeny")
+    @Permission("gufli.toolbox.command.tprequest")
+    @CommandHelp(description = "cmd.tpaccept.help.description")
+    public void tpdeny(@Source PlayerRef sender) {
+        Collection<TeleportRequest> requests = module.findTeleportRequestsByRequestee(sender);
+        if ( requests.isEmpty() ) {
+            module.plugin().localizer().send(sender, "cmd.tpaccept.error.no-request-exists");
+            return;
+        }
+        if ( requests.size() > 1 ) {
+            module.plugin().localizer().send(sender, "cmd.tpaccept.error.multiple-requests");
+            return;
+        }
+
+        TeleportRequest request = requests.iterator().next();
+        PlayerRef target = Universe.get().getPlayer(request.requester());
+        if ( target == null ) {
+            module.plugin().localizer().send(sender, "cmd.tpaccept.error.no-request-exists");
             return;
         }
 

@@ -15,6 +15,7 @@ import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.World;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,6 +23,8 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.TimeUnit;
 
 public class MovementModule extends AbstractModule {
+
+    private final static Duration TELEPORT_REQUEST_TIMEOUT = Duration.ofMinutes(2);
 
     private final Map<UUID, MovementSession> sessions = new ConcurrentHashMap<>();
     private final Set<TeleportRequest> teleportRequests = new CopyOnWriteArraySet<>();
@@ -112,7 +115,22 @@ public class MovementModule extends AbstractModule {
     public Optional<TeleportRequest> findTeleportRequest(@NotNull PlayerRef requester, @NotNull PlayerRef requestee) {
         return this.teleportRequests.stream()
                 .filter(r -> r.requester().equals(requester.getUuid()) && r.requestee().equals(requestee.getUuid()))
+                .filter(r -> r.timestamp().until(Instant.now()).compareTo(TELEPORT_REQUEST_TIMEOUT) <= 0)
                 .findFirst();
+    }
+
+    public Collection<TeleportRequest> findTeleportRequestsByRequestee(@NotNull PlayerRef requestee) {
+        return this.teleportRequests.stream()
+                .filter(r -> r.requestee().equals(requestee.getUuid()))
+                .filter(r -> r.timestamp().until(Instant.now()).compareTo(TELEPORT_REQUEST_TIMEOUT) <= 0)
+                .toList();
+    }
+
+    public Collection<TeleportRequest> findTeleportRequestsByRequester(@NotNull PlayerRef requester) {
+        return this.teleportRequests.stream()
+                .filter(r -> r.requester().equals(requester.getUuid()))
+                .filter(r -> r.timestamp().until(Instant.now()).compareTo(TELEPORT_REQUEST_TIMEOUT) <= 0)
+                .toList();
     }
 
 

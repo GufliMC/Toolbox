@@ -9,6 +9,9 @@ import com.gufli.colonel.hytale.annotations.parameter.ParameterHelp;
 import com.gufli.hytale.toolbox.modules.movement.MovementModule;
 import com.gufli.hytale.toolbox.modules.movement.data.TeleportRequest;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.Universe;
+
+import java.util.Collection;
 
 public class TeleportCancelCommand {
 
@@ -36,4 +39,32 @@ public class TeleportCancelCommand {
         module.plugin().localizer().send(sender, "cmd.tpcancel.requester", target.getUsername());
         module.plugin().localizer().send(target, "cmd.tpcancel.requestee", sender.getUsername());
     }
+
+    @Command("tpdeny")
+    @Permission("gufli.toolbox.command.tprequest")
+    @CommandHelp(description = "cmd.tpaccept.help.description")
+    public void tpdeny(@Source PlayerRef sender) {
+        Collection<TeleportRequest> requests = module.findTeleportRequestsByRequestee(sender);
+        if ( requests.isEmpty() ) {
+            module.plugin().localizer().send(sender, "cmd.tpcancel.error.no-request-exists");
+            return;
+        }
+        if ( requests.size() > 1 ) {
+            module.plugin().localizer().send(sender, "cmd.tpcancel.error.multiple-requests");
+            return;
+        }
+
+        TeleportRequest request = requests.iterator().next();
+        PlayerRef target = Universe.get().getPlayer(request.requester());
+        if ( target == null ) {
+            module.plugin().localizer().send(sender, "cmd.tpcancel.error.no-request-exists");
+            return;
+        }
+
+        module.teleportRequestCancel(sender, target);
+        module.plugin().localizer().send(sender, "cmd.tpcancel.requester", target.getUsername());
+        module.plugin().localizer().send(target, "cmd.tpcancel.requestee", sender.getUsername());
+    }
+
+
 }

@@ -6,10 +6,14 @@ import com.gufli.hytale.toolbox.modules.chat.commands.AnnounceCommand;
 import com.gufli.hytale.toolbox.modules.chat.commands.DirectMessageCommand;
 import com.gufli.hytale.toolbox.modules.chat.commands.PlayerListCommand;
 import com.gufli.hytale.toolbox.modules.chat.commands.ReplyCommand;
+import com.gufli.hytale.toolbox.modules.chat.manager.ChatManager;
+import com.gufli.hytale.toolbox.modules.chat.manager.ChatResult;
+import com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.Optional;
@@ -20,8 +24,12 @@ public class ChatModule extends AbstractModule {
 
     private final Map<UUID, UUID> replyTo = new ConcurrentHashMap<>();
 
+    @Nullable
+    private ChatManager chatManager;
+
     public ChatModule(@NotNull ToolboxPlugin plugin) {
         super(plugin);
+
 
         registerCommands(new AnnounceCommand(plugin.localizer()));
         registerCommands(new DirectMessageCommand(this));
@@ -31,6 +39,14 @@ public class ChatModule extends AbstractModule {
         plugin.getEventRegistry().register(PlayerDisconnectEvent.class, event -> {
             replyTo.remove(event.getPlayerRef().getUuid());
         });
+
+        if ( config().enabled ) {
+            this.chatManager = new ChatManager(this);
+        }
+    }
+
+    public ChatConfig config() {
+        return plugin().config().chat;
     }
 
     public void directMessage(PlayerRef sender, PlayerRef target, String message) {
