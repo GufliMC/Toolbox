@@ -13,7 +13,7 @@ public class CommandsConfig implements TomlSerializable {
 
     public CommandsConfig() {
         var infoCommand = new CustomCommand();
-        infoCommand.output = "<bold><#16537e>Toolbox developed by Gufli.</#16537e></bold>\nCheck our discord for help: <italic><#a9a9a9>https://discord.gg/UFEcurxWsV</#a9a9a9></italic>";
+        infoCommand.output = "<bold><gold>Toolbox developed by Gufli.</bold>\n<white>Check our discord for help: <italic><gray>https://discord.gg/UFEcurxWsV";
         custom.put("info", infoCommand);
 
         var rulesCommand = new CustomCommand();
