@@ -40,10 +40,10 @@ public class TeleportCancelCommand {
         module.plugin().localizer().send(target, "cmd.tpcancel.requestee", sender.getUsername());
     }
 
-    @Command("tpdeny")
+    @Command("tpcancel")
     @Permission("gufli.toolbox.command.tprequest")
-    @CommandHelp(description = "cmd.tpaccept.help.description")
-    public void tpdeny(@Source PlayerRef sender) {
+    @CommandHelp(description = "cmd.tpcancel.help.description")
+    public void tpcancel(@Source PlayerRef sender) {
         Collection<TeleportRequest> requests = module.findTeleportRequestsByRequestee(sender);
         if ( requests.isEmpty() ) {
             module.plugin().localizer().send(sender, "cmd.tpcancel.error.no-request-exists");
