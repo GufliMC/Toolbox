@@ -4,6 +4,7 @@
   "cmderr.parameter-is-missing": "<red>The parameter <dark_red>{0} <red>is missing. Expected syntax: <dark_red>{1}<red>.",
   "cmderr.command-not-found": "<red>Command not found: {0}",
   "cmderr.no-permission": "<red>You don't have permission for this command.",
+  "cmderr.sender-not-player": "<red>This command can only be executed by a player.",
 
   "cmderr.args.player-not-online": "<red>The player <dark_red>{0} <red>is not online.",
 
