@@ -20,6 +20,7 @@ public class CommandsModule extends AbstractModule {
                         Message result = plugin().localizer().recursiveLocalizeMessage(ctx.source(), output);
                         ctx.source().sendMessage(result);
                     })
+                    .property("permission", "gufli.toolbox.command." + entry.getKey())
                     .register();
         }
     }
