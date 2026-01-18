@@ -44,7 +44,7 @@ public class TeleportCancelCommand {
     @Permission("gufli.toolbox.command.tprequest")
     @CommandHelp(description = "cmd.tpcancel.help.description")
     public void tpcancel(@Source PlayerRef sender) {
-        Collection<TeleportRequest> requests = module.findTeleportRequestsByRequestee(sender);
+        Collection<TeleportRequest> requests = module.findTeleportRequestsByRequester(sender);
         if ( requests.isEmpty() ) {
             module.plugin().localizer().send(sender, "cmd.tpcancel.error.no-request-exists");
             return;
