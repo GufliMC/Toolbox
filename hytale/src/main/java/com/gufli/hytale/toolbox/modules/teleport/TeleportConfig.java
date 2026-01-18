@@ -1,9 +1,9 @@
-package com.gufli.hytale.toolbox.modules.movement;
+package com.gufli.hytale.toolbox.modules.teleport;
 
 import io.github.wasabithumb.jtoml.serial.TomlSerializable;
 import io.github.wasabithumb.jtoml.serial.reflect.Key;
 
-public class MovementConfig implements TomlSerializable {
+public class TeleportConfig implements TomlSerializable {
 
     @Key("teleport-random")
     public TeleportRandomConfig teleportRandom = new TeleportRandomConfig();

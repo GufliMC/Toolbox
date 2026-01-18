@@ -1,4 +1,4 @@
-package com.gufli.hytale.toolbox.modules.movement.data;
+package com.gufli.hytale.toolbox.modules.teleport.data;
 
 import com.hypixel.hytale.math.vector.Transform;
 import org.jetbrains.annotations.NotNull;

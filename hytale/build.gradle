@@ -1,3 +1,7 @@
+plugins {
+    id 'io.ebean' version '17.+'
+}
+
 dependencies {
     // provided
     compileOnly 'com.hypixel.hytale:HytaleServer:0.1.0'
@@ -6,6 +10,10 @@ dependencies {
     implementation 'com.gufli.brick.i18n:hytale:+'
     implementation 'com.gufli.colonel:hytale:+'
     implementation 'com.gufli.config:toml:+'
+    implementation 'com.gufli.brick.orm:ebean:+'
+
+    // run with migrations
+//    implementation 'com.hypixel.hytale:HytaleServer:0.1.0'
 }
 
 shadowJar {

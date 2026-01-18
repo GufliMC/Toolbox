@@ -1,11 +1,11 @@
-package com.gufli.hytale.toolbox.modules.movement;
+package com.gufli.hytale.toolbox.modules.teleport;
 
 import com.gufli.hytale.toolbox.ToolboxPlugin;
 import com.gufli.hytale.toolbox.module.AbstractModule;
-import com.gufli.hytale.toolbox.modules.movement.commands.*;
-import com.gufli.hytale.toolbox.modules.movement.data.MovementSession;
-import com.gufli.hytale.toolbox.modules.movement.data.Position;
-import com.gufli.hytale.toolbox.modules.movement.data.TeleportRequest;
+import com.gufli.hytale.toolbox.modules.teleport.commands.*;
+import com.gufli.hytale.toolbox.modules.teleport.data.MovementSession;
+import com.gufli.hytale.toolbox.modules.teleport.data.Position;
+import com.gufli.hytale.toolbox.modules.teleport.data.TeleportRequest;
 import com.hypixel.hytale.builtin.teleport.components.TeleportHistory;
 import com.hypixel.hytale.math.vector.Transform;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
@@ -22,14 +22,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.TimeUnit;
 
-public class MovementModule extends AbstractModule {
+public class TeleportModule extends AbstractModule {
 
     private final static Duration TELEPORT_REQUEST_TIMEOUT = Duration.ofMinutes(2);
 
     private final Map<UUID, MovementSession> sessions = new ConcurrentHashMap<>();
     private final Set<TeleportRequest> teleportRequests = new CopyOnWriteArraySet<>();
 
-    public MovementModule(@NotNull ToolboxPlugin plugin) {
+    public TeleportModule(@NotNull ToolboxPlugin plugin) {
         super(plugin);
         this.plugin().scheduler().asyncRepeating(this::update, 200, TimeUnit.MICROSECONDS);
 
@@ -49,7 +49,7 @@ public class MovementModule extends AbstractModule {
         registerCommands(new TeleportCancelCommand(this));
     }
 
-    public MovementConfig config() {
+    public TeleportConfig config() {
         return this.plugin().config().movement;
     }
 
@@ -66,7 +66,7 @@ public class MovementModule extends AbstractModule {
 
     //
 
-    public Optional<com.gufli.hytale.toolbox.modules.movement.data.Teleport> previousTeleport(@NotNull PlayerRef ref) {
+    public Optional<com.gufli.hytale.toolbox.modules.teleport.data.Teleport> previousTeleport(@NotNull PlayerRef ref) {
         MovementSession session = this.sessions.get(ref.getUuid());
         if (session == null) {
             return Optional.empty();

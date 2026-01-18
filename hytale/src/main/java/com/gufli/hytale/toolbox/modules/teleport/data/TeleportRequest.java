@@ -1,4 +1,4 @@
-package com.gufli.hytale.toolbox.modules.movement.data;
+package com.gufli.hytale.toolbox.modules.teleport.data;
 
 import org.jetbrains.annotations.NotNull;
 

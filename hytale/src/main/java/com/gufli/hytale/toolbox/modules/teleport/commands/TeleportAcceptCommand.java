@@ -1,4 +1,4 @@
-package com.gufli.hytale.toolbox.modules.movement.commands;
+package com.gufli.hytale.toolbox.modules.teleport.commands;
 
 import com.gufli.colonel.annotation.annotations.Command;
 import com.gufli.colonel.annotation.annotations.parameter.Parameter;
@@ -6,9 +6,9 @@ import com.gufli.colonel.annotation.annotations.parameter.Source;
 import com.gufli.colonel.hytale.annotations.command.CommandHelp;
 import com.gufli.colonel.hytale.annotations.command.Permission;
 import com.gufli.colonel.hytale.annotations.parameter.ParameterHelp;
-import com.gufli.hytale.toolbox.modules.movement.MovementModule;
-import com.gufli.hytale.toolbox.modules.movement.data.Position;
-import com.gufli.hytale.toolbox.modules.movement.data.TeleportRequest;
+import com.gufli.hytale.toolbox.modules.teleport.TeleportModule;
+import com.gufli.hytale.toolbox.modules.teleport.data.Position;
+import com.gufli.hytale.toolbox.modules.teleport.data.TeleportRequest;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import org.jetbrains.annotations.NotNull;
@@ -17,9 +17,9 @@ import java.util.Collection;
 
 public class TeleportAcceptCommand {
 
-    private final MovementModule module;
+    private final TeleportModule module;
 
-    public TeleportAcceptCommand(MovementModule module) {
+    public TeleportAcceptCommand(TeleportModule module) {
         this.module = module;
     }
 

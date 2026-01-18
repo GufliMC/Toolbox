@@ -1,10 +1,10 @@
-package com.gufli.hytale.toolbox.modules.movement.commands;
+package com.gufli.hytale.toolbox.modules.teleport.commands;
 
 import com.gufli.colonel.annotation.annotations.Command;
 import com.gufli.colonel.annotation.annotations.parameter.Source;
 import com.gufli.colonel.hytale.annotations.command.CommandHelp;
 import com.gufli.colonel.hytale.annotations.command.Permission;
-import com.gufli.hytale.toolbox.modules.movement.MovementModule;
+import com.gufli.hytale.toolbox.modules.teleport.TeleportModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -12,9 +12,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class BackCommand {
 
-    private final MovementModule module;
+    private final TeleportModule module;
 
-    public BackCommand(@NotNull MovementModule module) {
+    public BackCommand(@NotNull TeleportModule module) {
         this.module = module;
     }
 

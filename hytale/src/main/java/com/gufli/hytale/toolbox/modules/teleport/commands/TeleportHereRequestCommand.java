@@ -1,4 +1,4 @@
-package com.gufli.hytale.toolbox.modules.movement.commands;
+package com.gufli.hytale.toolbox.modules.teleport.commands;
 
 import com.gufli.colonel.annotation.annotations.Command;
 import com.gufli.colonel.annotation.annotations.parameter.Parameter;
@@ -6,23 +6,23 @@ import com.gufli.colonel.annotation.annotations.parameter.Source;
 import com.gufli.colonel.hytale.annotations.command.CommandHelp;
 import com.gufli.colonel.hytale.annotations.command.Permission;
 import com.gufli.colonel.hytale.annotations.parameter.ParameterHelp;
-import com.gufli.hytale.toolbox.modules.movement.MovementModule;
-import com.gufli.hytale.toolbox.modules.movement.data.TeleportRequest;
+import com.gufli.hytale.toolbox.modules.teleport.TeleportModule;
+import com.gufli.hytale.toolbox.modules.teleport.data.TeleportRequest;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 
-public class TeleportRequestCommand {
+public class TeleportHereRequestCommand {
 
-    private final MovementModule module;
+    private final TeleportModule module;
 
-    public TeleportRequestCommand(MovementModule module) {
+    public TeleportHereRequestCommand(TeleportModule module) {
         this.module = module;
     }
 
-    @Command("tprequest")
-    @Command("tpa")
+    @Command("tphererequest")
+    @Command("tpahere")
     @Permission("gufli.toolbox.command.tprequest")
     @CommandHelp(description = "cmd.tprequest.help.description")
-    public void tprequest(@Source PlayerRef sender,
+    public void tphererequest(@Source PlayerRef sender,
                           @Parameter
                           @ParameterHelp(description = "cmd.tprequest.help.param.target.description", type = "cmd.tprequest.help.param.target.type")
                           PlayerRef target) {
@@ -33,8 +33,8 @@ public class TeleportRequestCommand {
             return;
         }
 
-        module.teleportRequest(sender, target, TeleportRequest.TeleportRequestTarget.REQUESTEE);
-        module.plugin().localizer().send(sender, "cmd.tprequest.requester", target.getUsername());
-        module.plugin().localizer().send(target, "cmd.tprequest.requestee", sender.getUsername());
+        module.teleportRequest(sender, target, TeleportRequest.TeleportRequestTarget.REQUESTER);
+        module.plugin().localizer().send(sender, "cmd.tphererequest.requester", target.getUsername());
+        module.plugin().localizer().send(target, "cmd.tphererequest.requestee", sender.getUsername());
     }
 }

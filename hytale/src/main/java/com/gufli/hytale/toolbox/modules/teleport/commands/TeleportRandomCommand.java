@@ -1,4 +1,4 @@
-package com.gufli.hytale.toolbox.modules.movement.commands;
+package com.gufli.hytale.toolbox.modules.teleport.commands;
 
 import com.gufli.colonel.annotation.annotations.Command;
 import com.gufli.colonel.annotation.annotations.parameter.Parameter;
@@ -6,7 +6,7 @@ import com.gufli.colonel.annotation.annotations.parameter.Source;
 import com.gufli.colonel.hytale.annotations.command.CommandHelp;
 import com.gufli.colonel.hytale.annotations.command.Permission;
 import com.gufli.colonel.hytale.annotations.parameter.ParameterHelp;
-import com.gufli.hytale.toolbox.modules.movement.MovementModule;
+import com.gufli.hytale.toolbox.modules.teleport.TeleportModule;
 import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.math.util.MathUtil;
 import com.hypixel.hytale.math.vector.Transform;
@@ -21,9 +21,9 @@ import java.util.Random;
 public class TeleportRandomCommand {
 
     private final Random random = new Random();
-    private final MovementModule module;
+    private final TeleportModule module;
 
-    public TeleportRandomCommand(@NotNull MovementModule module) {
+    public TeleportRandomCommand(@NotNull TeleportModule module) {
         this.module = module;
     }
 

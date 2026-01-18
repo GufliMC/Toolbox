@@ -1,8 +1,9 @@
-package com.gufli.hytale.toolbox.modules.movement.data;
+package com.gufli.hytale.toolbox.modules.teleport.data;
 
 import com.hypixel.hytale.math.vector.Transform;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -10,10 +11,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MovementSession {
 
-    private final List<Position> history = new CopyOnWriteArrayList<>();
-    private final List<Teleport> teleports = new CopyOnWriteArrayList<>();
+    private final List<Position> history = new ArrayList<>();
+    private final List<Teleport> teleports = new ArrayList<>();
 
-    public void add(@NotNull UUID worldId, @NotNull Transform transform) {
+    public synchronized void add(@NotNull UUID worldId, @NotNull Transform transform) {
         var previous = !history.isEmpty() ? history.getLast() : null;
         if ( previous != null && previous.worldId().equals(worldId) && Math.sqrt(previous.transform().getPosition().distanceSquaredTo(transform.getPosition())) < 0.1 ) {
             this.history.remove(previous);
@@ -27,11 +28,11 @@ public class MovementSession {
             this.teleports.add(new Teleport(previous, current));
         }
 
-        while ( this.history.size() > 60 ) {
+        while (this.history.size() > 60) {
             this.history.removeFirst();
         }
 
-        while ( this.teleports.size() > 60 ) {
+        while (this.teleports.size() > 60) {
             this.teleports.removeFirst();
         }
     }
