@@ -99,7 +99,7 @@ public class MovementModule extends AbstractModule {
         TeleportHistory teleportHistoryComponent = store.ensureAndGetComponent(ref, TeleportHistory.getComponentType());
         teleportHistoryComponent.append(world, pos, rot, String.format("Teleport to (%s, %s, %s)", pos.getX(), pos.getY(), pos.getZ()));
 
-        store.addComponent(ref, Teleport.getComponentType(), new Teleport(world, transform));
+        store.addComponent(ref, Teleport.getComponentType(), new Teleport(world, pos, rot));
     }
 
     //
