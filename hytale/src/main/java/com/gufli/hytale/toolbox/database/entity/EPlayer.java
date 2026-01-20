@@ -52,4 +52,8 @@ public class EPlayer {
         return seentAt;
     }
 
+    public void setSeentAt(Instant seentAt) {
+        this.seentAt = seentAt;
+    }
+
 }

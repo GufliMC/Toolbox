@@ -14,6 +14,9 @@ public class InformationConfig implements TomlSerializable {
 
         public boolean enabled = true;
 
+        @Key("join-first-message")
+        public String joinFirstMessage = "<gray>Welcome <gold>{player}<gray> to the server! They deserve a cake.";
+
         @Key("join-message")
         public String joinMessage = "<green><bold>+</bold> <gold>{player} <gray>has joined the game.";
 
