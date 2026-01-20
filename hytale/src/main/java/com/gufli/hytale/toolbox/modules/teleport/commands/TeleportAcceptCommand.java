@@ -9,6 +9,7 @@ import com.gufli.colonel.hytale.annotations.parameter.ParameterHelp;
 import com.gufli.hytale.toolbox.modules.teleport.TeleportModule;
 import com.gufli.hytale.toolbox.modules.teleport.data.Position;
 import com.gufli.hytale.toolbox.modules.teleport.data.TeleportRequest;
+import com.gufli.hytale.toolbox.modules.warmup.WarmupModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import org.jetbrains.annotations.NotNull;
@@ -67,14 +68,20 @@ public class TeleportAcceptCommand {
     private void accept(@NotNull PlayerRef requester, @NotNull PlayerRef requestee, @NotNull TeleportRequest request) {
         module.teleportRequestCancel(requester, requestee);
 
+        WarmupModule warmup = this.module.plugin().module(WarmupModule.class);
+
         if ( request.target() == TeleportRequest.TeleportRequestTarget.REQUESTEE ) {
-            module.teleport(requester, new Position(requestee.getWorldUuid(), requestee.getTransform()));
-            module.plugin().localizer().send(requester, "cmd.tprequest.teleport.teleportee", requestee.getUsername());
-            module.plugin().localizer().send(requestee, "cmd.tprequest.teleport.destination", requester.getUsername());
+            module.plugin().localizer().send(requestee, "cmd.tpaccept.requestee", requester.getUsername());
+            warmup.teleport(requester, () -> {
+                module.teleport(requester, new Position(requestee.getWorldUuid(), requestee.getTransform()));
+                module.plugin().localizer().send(requester, "cmd.tprequest.teleport.teleportee", requestee.getUsername());
+            });
         } else {
-            module.teleport(requestee, new Position(requester.getWorldUuid(), requester.getTransform()));
-            module.plugin().localizer().send(requestee, "cmd.tprequest.teleport.teleportee", requester.getUsername());
-            module.plugin().localizer().send(requester, "cmd.tprequest.teleport.destination", requestee.getUsername());
+            module.plugin().localizer().send(requester, "cmd.tpaccept.requester", requestee.getUsername());
+            warmup.teleport(requestee, () -> {
+                module.teleport(requestee, new Position(requester.getWorldUuid(), requester.getTransform()));
+                module.plugin().localizer().send(requestee, "cmd.tprequest.teleport.teleportee", requester.getUsername());
+            });
         }
     }
 }

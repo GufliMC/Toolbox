@@ -7,6 +7,7 @@ import com.gufli.colonel.hytale.annotations.command.CommandHelp;
 import com.gufli.colonel.hytale.annotations.command.Permission;
 import com.gufli.colonel.hytale.annotations.parameter.ParameterHelp;
 import com.gufli.hytale.toolbox.modules.teleport.TeleportModule;
+import com.gufli.hytale.toolbox.modules.warmup.WarmupModule;
 import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.math.util.MathUtil;
 import com.hypixel.hytale.math.vector.Transform;
@@ -66,8 +67,12 @@ public class TeleportRandomCommand {
         }
         int height = worldChunk.getHeight(MathUtil.floor(x), MathUtil.floor(z));
 
-        module.teleport(player, world, new Transform(x, height, z));
-        module.plugin().localizer().send(player, "cmd.tprandom.teleported");
+        WarmupModule warmup = this.module.plugin().module(WarmupModule.class);
+        warmup.teleport(player, () -> {
+            module.teleport(player, world, new Transform(x, height, z));
+            module.plugin().localizer().send(player, "cmd.tprandom.teleported");
+        });
+
     }
 
 }

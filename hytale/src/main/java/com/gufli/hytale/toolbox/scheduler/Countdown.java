@@ -36,7 +36,6 @@ public class Countdown {
         }
 
         task = asyncScheduler.asyncRepeating(() -> {
-            remaining = remaining.minus(1, ChronoUnit.SECONDS);
             handler.accept(remaining.getSeconds());
 
             for (Milestone milestone : milestones) {
@@ -44,6 +43,13 @@ public class Countdown {
                     milestone.handler().accept(remaining.getSeconds());
                 }
             }
+
+            if ( remaining.getSeconds() <= 0 ) {
+                stop();
+                return;
+            }
+
+            remaining = remaining.minus(1, ChronoUnit.SECONDS);
         }, 1, TimeUnit.SECONDS);
     }
 
@@ -64,5 +70,7 @@ public class Countdown {
     public void set(long amount, TemporalUnit unit) {
         set(Duration.of(amount, unit));
     }
+
+    //
 
 }

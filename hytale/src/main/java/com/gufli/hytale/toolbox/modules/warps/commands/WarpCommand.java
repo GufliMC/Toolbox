@@ -7,6 +7,7 @@ import com.gufli.colonel.hytale.annotations.command.CommandHelp;
 import com.gufli.colonel.hytale.annotations.command.Permission;
 import com.gufli.colonel.hytale.annotations.parameter.ParameterHelp;
 import com.gufli.hytale.toolbox.database.entity.EWarp;
+import com.gufli.hytale.toolbox.modules.warmup.WarmupModule;
 import com.gufli.hytale.toolbox.modules.warps.WarpsModule;
 import com.hypixel.hytale.server.core.permissions.PermissionsModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -32,7 +33,10 @@ public class WarpCommand {
             return;
         }
 
-        module.teleport(sender, warp);
-        module.plugin().localizer().send(sender, "cmd.warp.teleport", warp.name());
+        var warmup = module.plugin().module(WarmupModule.class);
+        warmup.teleport(sender, () -> {
+            module.teleport(sender, warp);
+            module.plugin().localizer().send(sender, "cmd.warp.teleport", warp.name());
+        });
     }
 }

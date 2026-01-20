@@ -6,6 +6,7 @@ import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
@@ -31,6 +32,15 @@ public interface AsyncScheduler {
     SchedulerTask asyncLater(@NotNull Runnable task, long delay, @NotNull TimeUnit unit);
 
     /**
+     * Schedules a task with a delayed execution on a separate thread. Task execution stops when the test returns false.
+     * @param task the task
+     * @param delay the delay
+     * @param unit the time unit
+     * @return the scheduled task
+     */
+    SchedulerTask asyncLater(@NotNull Runnable task, @NotNull Supplier<Boolean> test, long delay, @NotNull TimeUnit unit);
+
+    /**
      * Schedules a task to be repeatedly executed on a separate thread. The first execution is submitted with no delay.
      * @param task the task
      * @param interval the interval
@@ -38,6 +48,15 @@ public interface AsyncScheduler {
      * @return the scheduled task
      */
     SchedulerTask asyncRepeating(@NotNull Runnable task, long interval, @NotNull TimeUnit unit);
+
+    /**
+     * Schedules a task to be repeatedly executed on a separate thread. The first execution is submitted with no delay. Repeating stops when the test returns false.
+     * @param task the task
+     * @param interval the interval
+     * @param unit the time unit
+     * @return the scheduled task
+     */
+    SchedulerTask asyncRepeating(@NotNull Runnable task, @NotNull Supplier<Boolean> test, long interval, @NotNull TimeUnit unit);
 
     /**
      * Schedules a task to be repeatedly executed on a separate thread.
@@ -48,6 +67,15 @@ public interface AsyncScheduler {
      * @return the scheduled task
      */
     SchedulerTask asyncRepeating(@NotNull Runnable task, long delay, long interval, @NotNull TimeUnit unit);
+
+    /**
+     * Schedules a task to be repeatedly executed on a separate thread. The first execution is submitted with no delay. Repeating stops when the test returns false.
+     * @param task the task
+     * @param interval the interval
+     * @param unit the time unit
+     * @return the scheduled task
+     */
+    SchedulerTask asyncRepeating(@NotNull Runnable task, @NotNull Supplier<Boolean> test, long delay, long interval, @NotNull TimeUnit unit);
 
     //
 

@@ -82,7 +82,9 @@ public class TeleportModule extends AbstractModule {
             throw new IllegalStateException("World does not exist: " + position.worldId());
         }
 
-        teleport(player, world, position.transform());
+        world.execute(() -> {
+            teleport(player, world, position.transform());
+        });
     }
 
     public void teleport(@NotNull PlayerRef player, @NotNull World world, @NotNull Transform transform) {

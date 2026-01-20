@@ -5,6 +5,7 @@ import com.gufli.colonel.annotation.annotations.parameter.Source;
 import com.gufli.colonel.hytale.annotations.command.CommandHelp;
 import com.gufli.colonel.hytale.annotations.command.Permission;
 import com.gufli.hytale.toolbox.modules.teleport.TeleportModule;
+import com.gufli.hytale.toolbox.modules.warmup.WarmupModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -34,8 +35,11 @@ public class BackCommand {
             return;
         }
 
-        module.teleport(sender, teleport.from());
-        module.plugin().localizer().send(sender, "cmd.back.teleported");
+        WarmupModule warmup = this.module.plugin().module(WarmupModule.class);
+        warmup.teleport(sender, () -> {
+            module.teleport(sender, teleport.from());
+            module.plugin().localizer().send(sender, "cmd.back.teleported");
+        });
     }
 
 }

@@ -8,6 +8,11 @@
 
   "cmderr.args.player-not-online": "<red>The player <dark_red>{0} <red>is not online.",
 
+  "warmup.teleport.cancelled.custom": "<red>Teleport was cancelled.",
+  "warmup.teleport.cancelled.player-moved": "<red>Teleport was cancelled. Please do not move.",
+  "warmup.teleport.cancelled.player-damaged": "<red>Teleport was cancelled. You took damage.",
+  "warmup.teleport.countdown": "<gray>Teleport will start in <green>{0} <gray>seconds.",
+
   "cmd.announce.help.description": "Send an announcement message in chat to all players.",
   "cmd.announce.help.param.message.description": "The announcement message to send.",
   "cmd.announce.help.param.message.type": "Text",
@@ -53,6 +58,8 @@
   "cmd.tpaccept.error.no-request-exists": "<red>You don't have a teleport request or it has already expired.",
   "cmd.tpaccept.error.no-request-exists-target": "<red>You don't have a teleport request from <dark_red>{0} <red>or it has already expired.",
   "cmd.tpaccept.error.multiple-requests": "<red>You have multiple teleport requests, please specify a player.",
+  "cmd.tpaccept.requester": "<green>{0} <gray>has accepted your teleport request.",
+  "cmd.tpaccept.requestee": "<gray>You have accepted the teleport request of <green>{0}<gray>.",
   "cmd.tprequest.teleport.teleportee": "<gray>You've teleported to <green>{0}<gray>.",
   "cmd.tprequest.teleport.destination": "<green>{0} <gray>has teleported to your location.",
 

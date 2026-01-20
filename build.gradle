@@ -33,6 +33,6 @@ apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-default.gradle
 apply from: 'https://raw.githubusercontent.com/GufliMC/scripts/refs/heads/main/gradle/subprojects-shadow.gradle'
 
 if ( System.getProperty("os.name").toLowerCase().contains("windows") ) {
-    ext.set("shadowCopy", [(project(':hytale')): 'D:\\Hytale\\server\\2026.01.13-dcad8778f\\Server\\mods'])
+    ext.set("shadowCopy", [(project(':hytale')): 'D:\\Hytale\\2026.01.17-4b0f30090\\Server\\mods'])
     apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-shadow-copy.gradle'
 }

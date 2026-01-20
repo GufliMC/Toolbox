@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
 
 public class BrickThreadPoolAsyncScheduler implements AsyncScheduler {
 
@@ -57,14 +58,43 @@ public class BrickThreadPoolAsyncScheduler implements AsyncScheduler {
     }
 
     @Override
-    public SchedulerTask asyncRepeating(@NotNull Runnable task, long interval, @NotNull TimeUnit unit) {
-        return asyncRepeating(task, 0, interval, unit);
+    public SchedulerTask asyncLater(@NotNull Runnable task, @NotNull Supplier<Boolean> test, long delay, @NotNull TimeUnit unit) {
+        return asyncLater(() -> {
+            if ( test.get() ) {
+                task.run();
+            }
+        }, delay, unit);
     }
 
     @Override
     public SchedulerTask asyncRepeating(@NotNull Runnable task, long delay, long interval, @NotNull TimeUnit unit) {
         ScheduledFuture<?> future = this.scheduler.scheduleAtFixedRate(() -> this.schedulerWorkerPool.execute(task), delay, interval, unit);
         return () -> future.cancel(false);
+    }
+
+    @Override
+    public SchedulerTask asyncRepeating(@NotNull Runnable task, @NotNull Supplier<Boolean> test, long delay, long interval, @NotNull TimeUnit unit) {
+        AtomicReference<SchedulerTask> ref = new AtomicReference<>();
+        Runnable runnable = () -> {
+            if ( test.get() ) {
+                task.run();
+            } else {
+                ref.get().cancel();
+            }
+        };
+        SchedulerTask stask = asyncRepeating(runnable, delay, interval, unit);
+        ref.set(stask);
+        return stask;
+    }
+
+    @Override
+    public SchedulerTask asyncRepeating(@NotNull Runnable task, long interval, @NotNull TimeUnit unit) {
+        return asyncRepeating(task, 0, interval, unit);
+    }
+
+    @Override
+    public SchedulerTask asyncRepeating(@NotNull Runnable task, @NotNull Supplier<Boolean> test, long interval, @NotNull TimeUnit unit) {
+        return asyncRepeating(task, test, 0, interval, unit);
     }
 
     ///////////////////////////////////////////////////////////////////////////
