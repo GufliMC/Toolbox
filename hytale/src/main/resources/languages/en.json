@@ -8,9 +8,9 @@
 
   "cmderr.args.player-not-online": "<red>The player <dark_red>{0} <red>is not online.",
 
-  "warmup.teleport.cancelled.custom": "<red>Teleport was cancelled.",
-  "warmup.teleport.cancelled.player-moved": "<red>Teleport was cancelled. Please do not move.",
-  "warmup.teleport.cancelled.player-damaged": "<red>Teleport was cancelled. You took damage.",
+  "warmup.teleport.cancel.custom": "<red>Teleport was cancelled.",
+  "warmup.teleport.cancel.player-moved": "<red>Teleport was cancelled. Please do not move.",
+  "warmup.teleport.cancel.player-damaged": "<red>Teleport was cancelled. You took damage.",
   "warmup.teleport.countdown": "<gray>Teleport will start in <green>{0} <gray>seconds.",
 
   "cmd.announce.help.description": "Send an announcement message in chat to all players.",

@@ -8,12 +8,14 @@ import com.gufli.hytale.toolbox.modules.warmup.data.WarmupCancellationReason;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
+import com.hypixel.hytale.server.core.permissions.PermissionsModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +25,7 @@ import java.util.stream.Collectors;
 
 public class WarmupModule extends AbstractModule {
 
-    private static final double MOVEMENT_THRESHOLD = 0.5D;
+    private static final double MOVEMENT_THRESHOLD = 0.3D;
 
     private final Collection<Warmup> warmups = new CopyOnWriteArraySet<>();
 
@@ -33,8 +35,12 @@ public class WarmupModule extends AbstractModule {
         plugin.getEventRegistry().register(PlayerDisconnectEvent.class, event -> {
             warmups.removeIf(w -> w.player().equals(event.getPlayerRef().getUuid()));
         });
+    }
 
-        // TODO cancel on reason
+    //
+
+    public WarmupConfig config() {
+        return plugin().config().teleport.warmup;
     }
 
     //
@@ -50,15 +56,33 @@ public class WarmupModule extends AbstractModule {
     }
 
     public void teleport(@NotNull PlayerRef player, @NotNull Runnable executor) {
+        Duration duration = null;
+
+        for ( Map.Entry<String, WarmupConfig.TeleportWarmupGroup> group : config().groups.entrySet() ) {
+            if ( !group.getKey().equals("default") && !PermissionsModule.get().hasPermission(player.getUuid(), "gufli.toolbox.warmup.teleport.group." + group.getKey()) ) {
+                continue;
+            }
+
+            Duration d = Duration.ofSeconds(group.getValue().delay);
+            if ( duration == null || d.compareTo(duration) < 0 ) {
+                duration = d;
+            }
+        }
+
+        if ( duration == null || duration.isZero() ) {
+            executor.run();
+            return;
+        }
+
         start(player,
-                executor::run,
+                executor,
                 (reason) -> {
                     plugin().localizer().send(player, "warmup.teleport.cancel." + reason.name().toLowerCase().replace("_", "-"));
                 },
-                duration -> {
-                    plugin().localizer().send(player, "warmup.teleport.countdown", duration.getSeconds());
+                d -> {
+                    plugin().localizer().send(player, "warmup.teleport.countdown", d.getSeconds());
                 },
-                Duration.ofSeconds(5),
+                duration,
                 WarmupCancellationReason.PLAYER_MOVED,
                 WarmupCancellationReason.PLAYER_DAMAGED);
     }
@@ -101,7 +125,7 @@ public class WarmupModule extends AbstractModule {
                         }
                     },
                     () -> warmups.contains(warmup),
-                    200, TimeUnit.MICROSECONDS);
+                    200, TimeUnit.MILLISECONDS);
         }
 
         if (reasons.contains(WarmupCancellationReason.PLAYER_DAMAGED)) {
@@ -125,14 +149,15 @@ public class WarmupModule extends AbstractModule {
                         startHealth.set(health);
                     },
                     () -> warmups.contains(warmup),
-                    200, TimeUnit.MICROSECONDS);
+                    200, TimeUnit.MILLISECONDS);
         }
     }
 
     public void cancel(@NotNull Warmup warmup, @NotNull WarmupCancellationReason reason) {
-        this.warmups.remove(warmup);
-        warmup.cancelled().accept(reason);
-        warmup.countdown().stop();
+        if ( this.warmups.remove(warmup) ) {
+            warmup.cancelled().accept(reason);
+            warmup.countdown().stop();
+        }
     }
 
     public void cancel(@NotNull Warmup warmup) {

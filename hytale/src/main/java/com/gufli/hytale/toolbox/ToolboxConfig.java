@@ -12,7 +12,7 @@ public class ToolboxConfig implements TomlSerializable {
     public ChatConfig chat = new ChatConfig();
     public InformationConfig information = new InformationConfig();
     public CommandsConfig commands = new CommandsConfig();
-    public TeleportConfig movement = new TeleportConfig();
+    public TeleportConfig teleport = new TeleportConfig();
     public DatabaseConfig database = new DatabaseConfig();
 
 }

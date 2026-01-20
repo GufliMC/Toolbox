@@ -1,11 +1,15 @@
 package com.gufli.hytale.toolbox.modules.teleport;
 
+import com.gufli.hytale.toolbox.modules.warmup.WarmupConfig;
 import io.github.wasabithumb.jtoml.serial.TomlSerializable;
 import io.github.wasabithumb.jtoml.serial.reflect.Key;
 
 public class TeleportConfig implements TomlSerializable {
 
-    @Key("teleport-random")
+    @Key("warmup")
+    public WarmupConfig warmup = new WarmupConfig();
+
+    @Key("random")
     public TeleportRandomConfig teleportRandom = new TeleportRandomConfig();
 
     public static class TeleportRandomConfig implements TomlSerializable {

@@ -31,7 +31,7 @@ public class TeleportModule extends AbstractModule {
 
     public TeleportModule(@NotNull ToolboxPlugin plugin) {
         super(plugin);
-        this.plugin().scheduler().asyncRepeating(this::update, 200, TimeUnit.MICROSECONDS);
+        this.plugin().scheduler().asyncRepeating(this::update, 200, TimeUnit.MILLISECONDS);
 
         plugin.getEventRegistry().register(PlayerDisconnectEvent.class, event -> {
             sessions.remove(event.getPlayerRef().getUuid());
@@ -50,7 +50,7 @@ public class TeleportModule extends AbstractModule {
     }
 
     public TeleportConfig config() {
-        return this.plugin().config().movement;
+        return this.plugin().config().teleport;
     }
 
     private void update() {
