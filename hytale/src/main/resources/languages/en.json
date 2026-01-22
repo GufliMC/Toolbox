@@ -7,6 +7,16 @@
   "cmderr.sender-not-player": "<red>This command can only be executed by a player.",
 
   "cmderr.args.player-not-online": "<red>The player <dark_red>{0} <red>is not online.",
+  "cmderr.args.player-not-found": "<red>The player <dark_red>{0} <red>does not exist.",
+  "cmderr.args.invalid-duration": "<red>Invalid duration format: <dark_red>{0}<red>. Use format like <dark_red>1d<red>, <dark_red>2h30m<red>, <dark_red>45s<red>.",
+
+  "duration.year": "{0,number} {0,choice,1#year|1<years}",
+  "duration.month": "{0,number} {0,choice,1#month|1<months}",
+  "duration.week": "{0,number} {0,choice,1#week|1<weeks}",
+  "duration.day": "{0,number} {0,choice,1#day|1<days}",
+  "duration.hour": "{0,number} {0,choice,1#hour|1<hours}",
+  "duration.minute": "{0,number} {0,choice,1#minute|1<minutes}",
+  "duration.second": "{0,number} {0,choice,1#second|1<seconds}",
 
   "warmup.teleport.cancel.custom": "<red>Teleport was cancelled.",
   "warmup.teleport.cancel.player-moved": "<red>Teleport was cancelled. Please do not move.",
@@ -158,9 +168,57 @@
   "cmd.flyspeed.other.changed": "<gray>The fly speed of <green>{0} <gray>was changed to <green>{1}<gray>.",
   "cmd.flyspeed.other.reset": "<gray>The fly speed of <green>{0} <gray>was reset to default.",
 
-  "punishment.mute.chat.permanent": "<red>You are permanently muted and cannot send messages in chat.",
+  "punishment.mute.chat.permanent": "<red>You are muted and cannot send messages in chat.",
   "punishment.mute.chat.temporary": "<red>You are muted for {0} and cannot send messages in chat.",
 
   "punishment.ban.connect.permanent": "<red>You are banned from this server.",
-  "punishment.ban.connect.temporary": "<red>You are banned for {0} and cannot connect to this server."
+  "punishment.ban.connect.temporary": "<red>You are banned for {0} and cannot connect to this server.",
+
+  "cmd.ban.help.description": "Permanently ban a player from the server.",
+  "cmd.ban.help.param.player.description": "The player to ban",
+  "cmd.ban.help.param.player.type": "Player",
+  "cmd.ban.help.param.reason.description": "The reason for the ban",
+  "cmd.ban.help.param.reason.type": "Text",
+  "cmd.ban": "<gray>You have permanently banned <green>{0} <gray>for: <white>{1}",
+
+  "cmd.tempban.help.description": "Temporarily ban a player from the server.",
+  "cmd.tempban.help.param.player.description": "The player to ban",
+  "cmd.tempban.help.param.player.type": "Player",
+  "cmd.tempban.help.param.duration.description": "The duration of the ban (e.g. 1d, 2h, 30m)",
+  "cmd.tempban.help.param.duration.type": "Duration",
+  "cmd.tempban.help.param.reason.description": "The reason for the ban",
+  "cmd.tempban.help.param.reason.type": "Text",
+  "cmd.tempban.error.player-not-found": "<red>Player <dark_red>{0} <red>not found.",
+  "cmd.tempban.error.invalid-duration": "<red>Invalid duration format: <dark_red>{0}<red>. Use format like 1d, 2h, 30m, 45s.",
+  "cmd.tempban.success": "<gray>You have banned <green>{0} <gray>for <green>{1} <gray>for: <white>{2}",
+
+  "cmd.mute.help.description": "Permanently mute a player in chat.",
+  "cmd.mute.help.param.player.description": "The player to mute",
+  "cmd.mute.help.param.player.type": "Player",
+  "cmd.mute.help.param.reason.description": "The reason for the mute",
+  "cmd.mute.help.param.reason.type": "Text",
+  "cmd.mute.error.player-already-muted": "<dark_red>{0} <red>is already muted.",
+  "cmd.mute": "<gray>You have permanently muted <green>{0} <gray>for: <white>{1}",
+
+  "cmd.tempmute.help.description": "Temporarily mute a player in chat.",
+  "cmd.tempmute.help.param.player.description": "The player to mute",
+  "cmd.tempmute.help.param.player.type": "Player",
+  "cmd.tempmute.help.param.duration.description": "The duration of the mute (e.g. 1d, 2h, 30m)",
+  "cmd.tempmute.help.param.duration.type": "Duration",
+  "cmd.tempmute.help.param.reason.description": "The reason for the mute",
+  "cmd.tempmute.help.param.reason.type": "Text",
+  "cmd.tempmute": "<gray>You have muted <green>{0} <gray>for <green>{1} <gray>for: <white>{2}",
+
+  "cmd.unban.help.description": "Unban a player from the server.",
+  "cmd.unban.help.param.player.description": "The player to unban",
+  "cmd.unban.help.param.player.type": "Player",
+  "cmd.unban.error.player-not-banned": "<red>Player <dark_red>{0} <red>is not banned.",
+  "cmd.unban": "<gray>You have unbanned <green>{0}<gray>.",
+
+  "cmd.unmute.help.description": "Unmute a player in chat.",
+  "cmd.unmute.help.param.player.description": "The player to unmute",
+  "cmd.unmute.help.param.player.type": "Player",
+  "cmd.unmute.error.player-not-muted": "<red>Player <dark_red>{0} <red>is not muted.",
+  "cmd.unmute": "<gray>You have unmuted <green>{0}<gray>.",
+  "cmd.unmute.target": "<gray>You have been unmuted and can now chat again."
 }

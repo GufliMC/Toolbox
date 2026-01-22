@@ -15,6 +15,7 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 public class InformationModule extends AbstractModule {
@@ -90,6 +91,28 @@ public class InformationModule extends AbstractModule {
 
     public Optional<EPlayer> player(@NotNull UUID id) {
         return players.stream().filter(ep -> ep.id().equals(id)).findFirst();
+    }
+
+    public Optional<EPlayer> player(@NotNull String name) {
+        return players.stream().filter(ep -> ep.name().equalsIgnoreCase(name)).findFirst();
+    }
+
+    public CompletableFuture<Optional<EPlayer>> playerAsync(@NotNull UUID id) {
+        Optional<EPlayer> local = player(id);
+        if (local.isPresent()) {
+            return CompletableFuture.completedFuture(local);
+        }
+        return plugin().database().findAsync(EPlayer.class, id)
+                .thenApply(Optional::ofNullable);
+    }
+
+    public CompletableFuture<Optional<EPlayer>> playerAsync(@NotNull String name) {
+        Optional<EPlayer> local = player(name);
+        if (local.isPresent()) {
+            return CompletableFuture.completedFuture(local);
+        }
+        return plugin().database().findWhereAsync(EPlayer.class, "name", name)
+                .thenApply(Optional::ofNullable);
     }
 
 }
