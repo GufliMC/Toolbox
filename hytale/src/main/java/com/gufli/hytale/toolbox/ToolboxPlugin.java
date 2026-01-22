@@ -12,6 +12,7 @@ import com.gufli.hytale.toolbox.modules.item.ItemModule;
 import com.gufli.hytale.toolbox.modules.teleport.TeleportModule;
 import com.gufli.hytale.toolbox.modules.warmup.WarmupModule;
 import com.gufli.hytale.toolbox.modules.warps.WarpsModule;
+import com.gufli.hytale.toolbox.modules.homes.HomesModule;
 import com.gufli.hytale.toolbox.scheduler.AsyncScheduler;
 import com.gufli.hytale.toolbox.scheduler.BrickThreadPoolAsyncScheduler;
 import com.gufli.config.toml.TomlConfig;
@@ -68,6 +69,7 @@ public class ToolboxPlugin extends JavaPlugin {
         this.modules.add(new AdminModule(this));
         this.modules.add(new WarpsModule(this));
         this.modules.add(new WarmupModule(this));
+        this.modules.add(new HomesModule(this));
     }
 
     //

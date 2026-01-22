@@ -106,5 +106,23 @@
   "cmd.warp.remove": "<gray>Warp <green>{0} <gray>has been removed.",
 
   "cmd.warp.list.help.description": "List all available warps.",
-  "cmd.warp.list": "<gray>There are <green>{0} <gray>warps available: <white>{1}"
+  "cmd.warp.list": "<gray>There are <green>{0} <gray>warps available: <white>{1}",
+
+  "cmd.home.help.description": "Teleport to one of your homes.",
+  "cmd.home.help.param.home.description": "The home to teleport to",
+  "cmd.home.help.param.home.type": "Home name",
+  "cmd.home.error.home-not-exist": "<red>You don't have a home named <dark_red>{0}<red>.",
+  "cmd.home.teleport": "<gray>You have been teleported to your home <green>{0}<gray>.",
+
+  "cmd.home.set.help.description": "Set a home at your current position.",
+  "cmd.home.set": "<gray>Home <green>{0} <gray>has been set at your current location.",
+  "cmd.home.set.max-homes": "<red>You have reached the maximum number of homes (<dark_red>{0}<red>).",
+
+  "cmd.home.remove.help.description": "Remove one of your homes.",
+  "cmd.home.remove.help.param.home.description": "The home to remove",
+  "cmd.home.remove.help.param.home.type": "Home name",
+  "cmd.home.remove": "<gray>Home <green>{0} <gray>has been removed.",
+
+  "cmd.home.list.help.description": "List all your homes.",
+  "cmd.home.list": "<gray>You have <green>{0} <gray>homes: <white>{1}"
 }
