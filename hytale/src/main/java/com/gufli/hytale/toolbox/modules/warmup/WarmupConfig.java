@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class WarmupConfig implements TomlSerializable {
 
-    @Comment.Pre("Assign a group with the following permission: gufli.toolbox.warmup.teleport.group.<groupname>")
+    @Comment.Inline("Assign a group with the following permission: gufli.toolbox.warmup.teleport.group.<groupname>")
     @Key("groups")
     public Map<String, TeleportWarmupGroup> groups = new HashMap<>();
 
