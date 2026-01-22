@@ -131,9 +131,9 @@
   "cmd.home.remove": "<gray>Home <green>{0} <gray>has been removed.",
 
   "cmd.home.list.help.description": "List all your homes.",
-  "cmd.home.list": "<gray>You have <green>{0} <gray>homes: <white>{1}",
+  "cmd.home.list": "<gray>You have <green>{0} <gray>{0,choice,0#homes|1#home|1>homes}: <white>{1}",
   "cmd.home.list.other.help.description": "List all homes of another player.",
   "cmd.home.list.other.help.param.player.description": "The player whose homes to list",
   "cmd.home.list.other.help.param.player.type": "Player",
-  "cmd.home.list.other": "<gray><green>{0} <gray>has <green>{1} <gray>homes: <white>{2}"
+  "cmd.home.list.other": "<gray><green>{0} <gray>has <green>{1} <gray>{1,choice,0#homes|1#home|1>homes}: <white>{2}"
 }
