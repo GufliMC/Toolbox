@@ -179,7 +179,7 @@
   "cmd.ban.help.param.player.type": "Player",
   "cmd.ban.help.param.reason.description": "The reason for the ban",
   "cmd.ban.help.param.reason.type": "Text",
-  "cmd.ban": "<gray>You have permanently banned <green>{0} <gray>for: <white>{1}",
+  "cmd.ban": "<gray>You have permanently banned <green>{0}<gray>.",
 
   "cmd.tempban.help.description": "Temporarily ban a player from the server.",
   "cmd.tempban.help.param.player.description": "The player to ban",
@@ -190,7 +190,7 @@
   "cmd.tempban.help.param.reason.type": "Text",
   "cmd.tempban.error.player-not-found": "<red>Player <dark_red>{0} <red>not found.",
   "cmd.tempban.error.invalid-duration": "<red>Invalid duration format: <dark_red>{0}<red>. Use format like 1d, 2h, 30m, 45s.",
-  "cmd.tempban.success": "<gray>You have banned <green>{0} <gray>for <green>{1} <gray>for: <white>{2}",
+  "cmd.tempban": "<gray>You have temporarily banned <green>{0} <gray>for <green>{1}<gray>.",
 
   "cmd.mute.help.description": "Permanently mute a player in chat.",
   "cmd.mute.help.param.player.description": "The player to mute",
@@ -198,7 +198,7 @@
   "cmd.mute.help.param.reason.description": "The reason for the mute",
   "cmd.mute.help.param.reason.type": "Text",
   "cmd.mute.error.player-already-muted": "<dark_red>{0} <red>is already muted.",
-  "cmd.mute": "<gray>You have permanently muted <green>{0} <gray>for: <white>{1}",
+  "cmd.mute": "<gray>You have permanently muted <green>{0}<gray>.",
 
   "cmd.tempmute.help.description": "Temporarily mute a player in chat.",
   "cmd.tempmute.help.param.player.description": "The player to mute",
@@ -207,7 +207,7 @@
   "cmd.tempmute.help.param.duration.type": "Duration",
   "cmd.tempmute.help.param.reason.description": "The reason for the mute",
   "cmd.tempmute.help.param.reason.type": "Text",
-  "cmd.tempmute": "<gray>You have muted <green>{0} <gray>for <green>{1} <gray>for: <white>{2}",
+  "cmd.tempmute": "<gray>You have temporarily muted <green>{0} <gray>for <green>{1}<gray>.",
 
   "cmd.unban.help.description": "Unban a player from the server.",
   "cmd.unban.help.param.player.description": "The player to unban",
