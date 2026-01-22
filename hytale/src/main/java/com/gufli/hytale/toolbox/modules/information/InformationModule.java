@@ -19,7 +19,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 public class InformationModule extends AbstractModule {
 
-    private Set<EPlayer> players = new CopyOnWriteArraySet<>();
+    private final Set<EPlayer> players = new CopyOnWriteArraySet<>();
 
     public InformationModule(@NotNull ToolboxPlugin plugin) {
         super(plugin);

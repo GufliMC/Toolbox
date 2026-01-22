@@ -156,6 +156,11 @@
   "cmd.flyspeed.other.help.param.player.description": "The player for whom to set the fly speed",
   "cmd.flyspeed.other.help.param.player.type": "Player",
   "cmd.flyspeed.other.changed": "<gray>The fly speed of <green>{0} <gray>was changed to <green>{1}<gray>.",
-  "cmd.flyspeed.other.reset": "<gray>The fly speed of <green>{0} <gray>was reset to default."
+  "cmd.flyspeed.other.reset": "<gray>The fly speed of <green>{0} <gray>was reset to default.",
 
+  "punishment.mute.chat.permanent": "<red>You are permanently muted and cannot send messages in chat.",
+  "punishment.mute.chat.temporary": "<red>You are muted for {0} and cannot send messages in chat.",
+
+  "punishment.ban.connect.permanent": "<red>You are banned from this server.",
+  "punishment.ban.connect.temporary": "<red>You are banned for {0} and cannot connect to this server."
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <createTable name="&quot;bans&quot;" identityType="external" pkName="&quot;pk_bans&quot;">
+            <column name="&quot;id&quot;" type="uuid(40)" primaryKey="true" identity="true"/>
+            <column name="&quot;playerId&quot;" type="uuid" notnull="true" references="&quot;players&quot;.&quot;id&quot;" foreignKeyName="&quot;fk_bans_playerId&quot;" foreignKeyIndex="&quot;ix_bans_playerId&quot;"/>
+            <column name="&quot;issuerId&quot;" type="uuid" references="&quot;players&quot;.&quot;id&quot;" foreignKeyName="&quot;fk_bans_issuerId&quot;" foreignKeyIndex="&quot;ix_bans_issuerId&quot;"/>
+            <column name="&quot;reason&quot;" type="varchar" notnull="true"/>
+            <column name="&quot;expiresAt&quot;" type="timestamp"/>
+            <column name="&quot;canceledAt&quot;" type="timestamp"/>
+            <column name="&quot;createdAt&quot;" type="timestamp" notnull="true"/>
+        </createTable>
+        <createTable name="&quot;mutes&quot;" identityType="external" pkName="&quot;pk_mutes&quot;">
+            <column name="&quot;id&quot;" type="uuid(40)" primaryKey="true" identity="true"/>
+            <column name="&quot;playerId&quot;" type="uuid" notnull="true" references="&quot;players&quot;.&quot;id&quot;" foreignKeyName="&quot;fk_mutes_playerId&quot;" foreignKeyIndex="&quot;ix_mutes_playerId&quot;"/>
+            <column name="&quot;issuerId&quot;" type="uuid" references="&quot;players&quot;.&quot;id&quot;" foreignKeyName="&quot;fk_mutes_issuerId&quot;" foreignKeyIndex="&quot;ix_mutes_issuerId&quot;"/>
+            <column name="&quot;reason&quot;" type="varchar" notnull="true"/>
+            <column name="&quot;expiresAt&quot;" type="timestamp"/>
+            <column name="&quot;canceledAt&quot;" type="timestamp"/>
+            <column name="&quot;createdAt&quot;" type="timestamp" notnull="true"/>
+        </createTable>
+    </changeSet>
+</migration>

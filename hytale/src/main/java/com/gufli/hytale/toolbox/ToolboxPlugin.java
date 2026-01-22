@@ -9,6 +9,7 @@ import com.gufli.hytale.toolbox.modules.chat.ChatModule;
 import com.gufli.hytale.toolbox.modules.commands.CommandsModule;
 import com.gufli.hytale.toolbox.modules.information.InformationModule;
 import com.gufli.hytale.toolbox.modules.item.ItemModule;
+import com.gufli.hytale.toolbox.modules.punishment.PunishmentModule;
 import com.gufli.hytale.toolbox.modules.teleport.TeleportModule;
 import com.gufli.hytale.toolbox.modules.warmup.WarmupModule;
 import com.gufli.hytale.toolbox.modules.warps.WarpsModule;
@@ -61,11 +62,12 @@ public class ToolboxPlugin extends JavaPlugin {
     }
 
     private void setupModules() {
+        this.modules.add(new InformationModule(this));
+        this.modules.add(new PunishmentModule(this));
         this.modules.add(new TeleportModule(this));
         this.modules.add(new ChatModule(this));
         this.modules.add(new ItemModule(this));
         this.modules.add(new CommandsModule(this));
-        this.modules.add(new InformationModule(this));
         this.modules.add(new AdminModule(this));
         this.modules.add(new WarpsModule(this));
         this.modules.add(new WarmupModule(this));
