@@ -2,6 +2,8 @@ package com.gufli.hytale.toolbox.modules.admin;
 
 import com.gufli.hytale.toolbox.ToolboxPlugin;
 import com.gufli.hytale.toolbox.module.AbstractModule;
+import com.gufli.hytale.toolbox.modules.admin.commands.FlyCommand;
+import com.gufli.hytale.toolbox.modules.admin.commands.FlySpeedCommand;
 import com.gufli.hytale.toolbox.modules.admin.commands.FreecamCommand;
 import com.gufli.hytale.toolbox.modules.admin.commands.GodCommand;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
@@ -21,6 +23,8 @@ public class AdminModule extends AbstractModule {
 
         registerCommands(new GodCommand(plugin.localizer()));
         registerCommands(new FreecamCommand(this));
+        registerCommands(new FlyCommand(plugin.localizer()));
+        registerCommands(new FlySpeedCommand(plugin.localizer()));
 
         plugin.getEventRegistry().register(PlayerDisconnectEvent.class, event -> {
             freecamPlayers.remove(event.getPlayerRef().getUuid());

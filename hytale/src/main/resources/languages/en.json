@@ -135,5 +135,27 @@
   "cmd.home.list.other.help.description": "List all homes of another player.",
   "cmd.home.list.other.help.param.player.description": "The player whose homes to list",
   "cmd.home.list.other.help.param.player.type": "Player",
-  "cmd.home.list.other": "<gray><green>{0} <gray>has <green>{1} <gray>{1,choice,0#homes|1#home|1>homes}: <white>{2}"
+  "cmd.home.list.other": "<gray><green>{0} <gray>has <green>{1} <gray>{1,choice,0#homes|1#home|1>homes}: <white>{2}",
+
+  "cmd.fly.help.description": "Toggle fly mode.",
+  "cmd.fly.enabled": "<gray>You have <green>enabled <gray>fly mode.",
+  "cmd.fly.disabled": "<gray>You have <green>disabled <gray>fly mode.",
+  "cmd.fly.other.help.description": "Toggle fly mode for another player.",
+  "cmd.fly.other.help.param.player.description": "The player for whom to toggle fly mode",
+  "cmd.fly.other.help.param.player.type": "Player",
+  "cmd.fly.other.enabled": "<gray>You have <green>enabled <gray>fly mode for <green>{0}<gray>.",
+  "cmd.fly.other.disabled": "<gray>You have <green>disabled <gray>fly mode for <green>{0}<gray>.",
+
+  "cmd.flyspeed.error.invalid_speed": "<red>Invalid fly speed <dark_red>{0} <red>. Please provide a value between 0 and 100.",
+  "cmd.flyspeed.help.description": "Set your fly speed.",
+  "cmd.flyspeed.help.param.speed.description": "The fly speed to set (0-100)",
+  "cmd.flyspeed.help.param.speed.type": "Number",
+  "cmd.flyspeed.changed": "<gray>Your fly speed was changed to <green>{0}<gray>.",
+  "cmd.flyspeed.reset": "<gray>Your fly speed was reset to default.",
+  "cmd.flyspeed.other.help.description": "Set the fly speed for another player.",
+  "cmd.flyspeed.other.help.param.player.description": "The player for whom to set the fly speed",
+  "cmd.flyspeed.other.help.param.player.type": "Player",
+  "cmd.flyspeed.other.changed": "<gray>The fly speed of <green>{0} <gray>was changed to <green>{1}<gray>.",
+  "cmd.flyspeed.other.reset": "<gray>The fly speed of <green>{0} <gray>was reset to default."
+
 }
