@@ -35,7 +35,7 @@ public class HomeRemoveCommand {
     @Command("delhome")
     @CommandHelp(description = "cmd.home.remove.help.description")
     @Permission("gufli.toolbox.command.home.remove")
-    public void sethome(@Source PlayerRef sender) {
+    public void delhome(@Source PlayerRef sender) {
         var home = module.home(sender.getUuid(), HomesModule.DEFAULT_HOME_NAME).orElse(null);
         if (home == null) {
             module.plugin().localizer().send(sender, "cmd.home.error.home-not-exist", HomesModule.DEFAULT_HOME_NAME);

@@ -8,7 +8,7 @@ import com.gufli.colonel.hytale.annotations.command.Permission;
 import com.gufli.colonel.hytale.annotations.parameter.ParameterHelp;
 import com.gufli.hytale.toolbox.database.entity.EWarp;
 import com.gufli.hytale.toolbox.modules.warps.WarpsModule;
-import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.command.system.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 public class WarpRemoveCommand {
@@ -23,7 +23,7 @@ public class WarpRemoveCommand {
     @Command("delwarp")
     @CommandHelp(description = "cmd.warp.remove.help.description")
     @Permission("gufli.toolbox.command.warp.remove")
-    public void setwarp(@Source PlayerRef sender,
+    public void setwarp(@Source CommandSender sender,
                         @Parameter
                         @ParameterHelp(description = "cmd.warp.remove.help.param.warp.description", type = "cmd.warp.remove.help.param.warp.type")
                         EWarp warp) {

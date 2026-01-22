@@ -8,6 +8,7 @@ import com.gufli.colonel.hytale.annotations.command.Permission;
 import com.gufli.colonel.hytale.annotations.parameter.ParameterHelp;
 import com.gufli.hytale.toolbox.database.entity.EHome;
 import com.gufli.hytale.toolbox.modules.homes.HomesModule;
+import com.hypixel.hytale.server.core.command.system.CommandSender;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,7 +36,7 @@ public class HomeListCommand {
     @Command("homes")
     @CommandHelp(description = "cmd.home.list.other.help.description")
     @Permission("gufli.toolbox.command.home.list.other")
-    public void homes(@Source PlayerRef sender,
+    public void homes(@Source CommandSender sender,
                           @Parameter
                           @ParameterHelp(description = "cmd.home.list.other.help.param.player.description", type = "cmd.home.list.other.help.param.player.type")
                           PlayerRef target) {
