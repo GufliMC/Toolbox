@@ -4,6 +4,7 @@ import com.gufli.brick.orm.ebean.database.EbeanConfig;
 import com.gufli.brick.orm.ebean.database.EbeanDatabaseContext;
 import com.gufli.brick.orm.ebean.database.EbeanMigrations;
 import com.gufli.hytale.toolbox.database.converters.TransformConverter;
+import com.gufli.hytale.toolbox.database.entity.EHome;
 import com.gufli.hytale.toolbox.database.entity.EPlayer;
 import com.gufli.hytale.toolbox.database.entity.EWarp;
 import io.ebean.annotation.Platform;
@@ -33,6 +34,7 @@ public class ToolboxDatabaseContext extends EbeanDatabaseContext {
     private final static Class<?>[] APPLICABLE_CLASSES = new Class[]{
             EPlayer.class,
             EWarp.class,
+            EHome.class,
 
             TransformConverter.class
     };

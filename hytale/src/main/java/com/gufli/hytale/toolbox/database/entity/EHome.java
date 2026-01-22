@@ -14,7 +14,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Index(unique = true, columnNames = {"player_id", "name"})
+@Index(unique = true, columnNames = {"playerId", "name"})
 @Table(name = "homes")
 public class EHome {
 

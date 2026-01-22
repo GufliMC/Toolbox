@@ -13,6 +13,8 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
+
 public class HomeCommand {
 
     private final HomesModule module;
@@ -41,7 +43,7 @@ public class HomeCommand {
     @Command("home")
     @CommandHelp(description = "cmd.home.help.description")
     @Permission("gufli.toolbox.command.home")
-    public void homeWithName(@Source PlayerRef sender,
+    public void home(@Source PlayerRef sender,
                      @Parameter
                      @ParameterHelp(description = "cmd.home.help.param.home.description", type = "cmd.home.help.param.home.type")
                      EHome home) {
@@ -49,6 +51,29 @@ public class HomeCommand {
         warmup.teleport(sender, () -> {
             module.teleport(sender, home);
             module.plugin().localizer().send(sender, "cmd.home.teleport", home.name());
+        });
+    }
+
+    @Command("home")
+    @CommandHelp(description = "cmd.home.other.help.description")
+    @Permission("gufli.toolbox.command.home.other")
+    public void home(@Source PlayerRef sender,
+                     @Parameter
+                     @ParameterHelp(description = "cmd.home.other.help.param.player.description", type = "cmd.home.other.help.param.player.type")
+                     PlayerRef target,
+                     @Parameter
+                     @ParameterHelp(description = "cmd.home.other.help.param.home.description", type = "cmd.home.other.help.param.home.type")
+                     String homeName) {
+        var home = module.home(target.getUuid(), homeName).orElse(null);
+        if (home == null) {
+            module.plugin().localizer().send(sender, "cmd.home.error.player-home-not-exist", target.getUsername(), homeName);
+            return;
+        }
+
+        var warmup = module.plugin().module(WarmupModule.class);
+        warmup.teleport(sender, () -> {
+            module.teleport(sender, home);
+            module.plugin().localizer().send(sender, "cmd.home.other.teleport", target.getUsername(), home.name());
         });
     }
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <createTable name="&quot;homes&quot;" identityType="external" pkName="&quot;pk_homes&quot;">
+            <column name="&quot;id&quot;" type="uuid(40)" primaryKey="true" identity="true"/>
+            <column name="&quot;playerId&quot;" type="uuid(40)" notnull="true"/>
+            <column name="&quot;name&quot;" type="varchar" notnull="true"/>
+            <column name="&quot;worldId&quot;" type="uuid(40)" notnull="true"/>
+            <column name="&quot;position&quot;" type="varchar" notnull="true"/>
+            <column name="&quot;createdAt&quot;" type="timestamp" notnull="true"/>
+            <column name="&quot;updatedAt&quot;" type="timestamp" notnull="true"/>
+            <uniqueConstraint name="&quot;uq_homes_playerId_name&quot;" columnNames="&quot;playerId&quot;,&quot;name&quot;" oneToOne="false" nullableColumns=""/>
+        </createTable>
+    </changeSet>
+</migration>
