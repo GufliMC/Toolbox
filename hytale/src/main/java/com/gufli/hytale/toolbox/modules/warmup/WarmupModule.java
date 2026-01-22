@@ -13,27 +13,25 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 public class WarmupModule extends AbstractModule {
 
     private static final double MOVEMENT_THRESHOLD = 0.3D;
 
-    private final Collection<Warmup> warmups = new CopyOnWriteArraySet<>();
+    private final Map<UUID, Warmup> warmups = new ConcurrentHashMap<>();
 
     public WarmupModule(@NotNull ToolboxPlugin plugin) {
         super(plugin);
 
         plugin.getEventRegistry().register(PlayerDisconnectEvent.class, event -> {
-            warmups.removeIf(w -> w.player().equals(event.getPlayerRef().getUuid()));
+            warmups.values().removeIf(w -> w.player().equals(event.getPlayerRef().getUuid()));
         });
     }
 
@@ -45,15 +43,26 @@ public class WarmupModule extends AbstractModule {
 
     //
 
-    public Collection<Warmup> warmups() {
-        return Collections.unmodifiableCollection(warmups);
+    public void cancel(@NotNull UUID id, @NotNull WarmupCancellationReason reason) {
+        Warmup warmup = this.warmups.remove(id);
+        if ( warmup != null ) {
+            warmup.cancelled().accept(reason);
+            warmup.countdown().stop();
+        }
     }
 
-    public Collection<Warmup> warmups(@NotNull PlayerRef player) {
-        return warmups.stream()
-                .filter(w -> w.player().equals(player.getUuid()))
-                .collect(Collectors.toUnmodifiableSet());
+    public void cancel(@NotNull UUID id) {
+        this.cancel(id, WarmupCancellationReason.CUSTOM);
     }
+
+    private void execute(@NotNull UUID id) {
+        Warmup warmup = this.warmups.remove(id);
+        if ( warmup != null ) {
+            warmup.executor().run();
+        }
+    }
+
+    //
 
     public void teleport(@NotNull PlayerRef player, @NotNull Runnable executor) {
         Duration duration = null;
@@ -91,11 +100,18 @@ public class WarmupModule extends AbstractModule {
             @NotNull PlayerRef player,
             @NotNull Runnable executor,
             @NotNull Consumer<WarmupCancellationReason> cancelled,
-            @NotNull Consumer<Duration> countdown,
+            @NotNull Consumer<Duration> countdownHandler,
             @NotNull Duration duration,
             @NotNull WarmupCancellationReason... cancellationReasons
     ) {
-        var c = this.plugin().scheduler().countdown(duration)
+        warmups.entrySet().stream()
+                .filter(entry -> entry.getValue().player().equals(player.getUuid()))
+                .map(Map.Entry::getKey)
+                .findFirst().ifPresent(existing -> cancel(existing, WarmupCancellationReason.CUSTOM));
+
+        UUID id = UUID.randomUUID();
+
+        var countdown = this.plugin().scheduler().countdown(duration)
                 .handler(seconds -> {
                     if (seconds == 0) {
                         return;
@@ -103,65 +119,62 @@ public class WarmupModule extends AbstractModule {
                     if (seconds > 5 && seconds % 5 != 0) {
                         return;
                     }
-                    countdown.accept(Duration.ofSeconds(seconds));
+                    countdownHandler.accept(Duration.ofSeconds(seconds));
                 })
-                .milestone((_) -> {
-                    executor.run();
-                }, 0)
+                .milestone((_) -> execute(id), 0)
                 .build();
-        c.start();
+        countdown.start();
 
-        var warmup = new Warmup(player.getUuid(), executor, c, cancelled, cancellationReasons);
-        this.warmups.add(warmup);
+        var warmup = new Warmup(player.getUuid(), executor, countdown, cancelled, cancellationReasons);
+        this.warmups.put(id, warmup);
 
         Set<WarmupCancellationReason> reasons = Set.of(cancellationReasons);
         if (reasons.contains(WarmupCancellationReason.PLAYER_MOVED)) {
-            assert player.getWorldUuid() != null;
-            var pos = new Position(player.getWorldUuid(), player.getTransform().clone());
-            this.plugin().scheduler().asyncRepeating(
-                    () -> {
-                        if (Math.sqrt(pos.transform().getPosition().distanceSquaredTo(player.getTransform().getPosition())) >= MOVEMENT_THRESHOLD) {
-                            cancel(warmup, WarmupCancellationReason.PLAYER_MOVED);
-                        }
-                    },
-                    () -> warmups.contains(warmup),
-                    200, TimeUnit.MILLISECONDS);
+            checkPlayerMoved(id, player);
         }
 
         if (reasons.contains(WarmupCancellationReason.PLAYER_DAMAGED)) {
-            assert player.getWorldUuid() != null;
-            var ref = player.getReference();
-            assert ref != null;
-            var statMap = ref.getStore().getComponent(ref, EntityStatMap.getComponentType());
-            assert statMap != null;
-            int healthStatIndex = DefaultEntityStatTypes.getHealth();
-            var statValue = statMap.get(healthStatIndex);
-            assert statValue != null;
-
-            AtomicReference<Float> startHealth = new AtomicReference<>(statValue.get());
-            this.plugin().scheduler().asyncRepeating(
-                    () -> {
-                        float health = statValue.get();
-                        if (health < startHealth.get()) {
-                            cancel(warmup, WarmupCancellationReason.PLAYER_DAMAGED);
-                            return;
-                        }
-                        startHealth.set(health);
-                    },
-                    () -> warmups.contains(warmup),
-                    200, TimeUnit.MILLISECONDS);
+            checkPlayerDamaged(id, player);
         }
     }
 
-    public void cancel(@NotNull Warmup warmup, @NotNull WarmupCancellationReason reason) {
-        if ( this.warmups.remove(warmup) ) {
-            warmup.cancelled().accept(reason);
-            warmup.countdown().stop();
-        }
+    //
+
+    private void checkPlayerMoved(@NotNull UUID id, @NotNull PlayerRef player) {
+        assert player.getWorldUuid() != null;
+        var pos = new Position(player.getWorldUuid(), player.getTransform().clone());
+        this.plugin().scheduler().asyncRepeating(
+                () -> {
+                    if (Math.sqrt(pos.transform().getPosition().distanceSquaredTo(player.getTransform().getPosition())) >= MOVEMENT_THRESHOLD) {
+                        cancel(id, WarmupCancellationReason.PLAYER_MOVED);
+                    }
+                },
+                () -> warmups.containsKey(id),
+                200, TimeUnit.MILLISECONDS);
     }
 
-    public void cancel(@NotNull Warmup warmup) {
-        this.cancel(warmup, WarmupCancellationReason.CUSTOM);
+    private void checkPlayerDamaged(@NotNull UUID id, @NotNull PlayerRef player) {
+        assert player.getWorldUuid() != null;
+        var ref = player.getReference();
+        assert ref != null;
+        var statMap = ref.getStore().getComponent(ref, EntityStatMap.getComponentType());
+        assert statMap != null;
+        int healthStatIndex = DefaultEntityStatTypes.getHealth();
+        var statValue = statMap.get(healthStatIndex);
+        assert statValue != null;
+
+        AtomicReference<Float> startHealth = new AtomicReference<>(statValue.get());
+        this.plugin().scheduler().asyncRepeating(
+                () -> {
+                    float health = statValue.get();
+                    if (health < startHealth.get()) {
+                        cancel(id, WarmupCancellationReason.PLAYER_DAMAGED);
+                        return;
+                    }
+                    startHealth.set(health);
+                },
+                () -> warmups.containsKey(id),
+                200, TimeUnit.MILLISECONDS);
     }
 
 
